@@ -1,0 +1,46 @@
+name: Check and publish the book
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Rust toolchain
+      run: rustup toolchain install stable --profile=minimal --target=thumbv7em-none-eabihf && rustup component add rustfmt
+    - name: Check Rust formatting
+      run: cargo fmt --all -- --check
+    - name: Build 'boot' ecosystem walkthrough code
+      run: cargo build --target=thumbv7em-none-eabihf --package=ew_boot
+    - name: Build 'RAL' ecosystem walkthrough code
+      run: cargo build --target=thumbv7em-none-eabihf --package=ew_ral
+    - name: Build 'HAL' ecosystem walkthrough code
+      run: cargo build --target=thumbv7em-none-eabihf --package=ew_hal
+
+    - name: Build 'BSP' ecosystem walkthrough code for an i.MXRT1010evk
+      run: cargo build --target=thumbv7em-none-eabihf --package=ew_bsp --features=imxrt1010evk
+    - name: Build 'BSP' ecosystem walkthrough code for a Teensy 4
+      run: cargo build --target=thumbv7em-none-eabihf --package=ew_bsp --features=teensy4
+    - name: Build 'BSP' ecosystem walkthrough code for an i.MXRT1170EVK
+      run: cargo build --target=thumbv7em-none-eabihf --package=ew_bsp --features=imxrt1170evk-cm7
+
+  book:
+    runs-on: ubuntu-latest
+    needs: examples
+    steps:
+    - uses: actions/checkout@v2
+    # https://rust-lang.github.io/mdBook/continuous-integration.html
+    - name: Download mdBook
+      run: mkdir bin && curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.21/mdbook-v0.4.21-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
+    - name: Build the book
+      run: ./bin/mdbook build
+    - name: Deploy to GitHub pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: book
+        publish_branch: gh-pages
