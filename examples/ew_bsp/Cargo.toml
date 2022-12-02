@@ -1,0 +1,43 @@
+[package]
+name = "ew_bsp"
+version = "0.1.0"
+edition = "2021"
+
+# Cargo.toml
+
+[dependencies]
+imxrt-hal = { version = "0.5.0-alpha" }
+imxrt-ral = { version = "0.5", features = ["rt"] }
+imxrt-rt = { version = "0.1", features = ["device"] }
+
+teensy4-fcb      = { version = "0.4", optional = true }
+imxrt1010evk-fcb = { version = "0.1", optional = true }
+imxrt1170evk-fcb = { version = "0.1", optional = true }
+
+panic-halt = "0.2"
+cfg-if = "1"
+
+[build-dependencies]
+imxrt-rt = { version = "0.1", features = ["device"] }
+
+[features]
+# board = [
+#     "imxrt-ral/${CHIP},
+#     "imxrt-hal/${FAMILY},
+#     "${BOOT_HEADER},
+# ]
+teensy4 = [
+    "imxrt-ral/imxrt1062",
+    "imxrt-hal/imxrt1060",
+    "dep:teensy4-fcb",
+]
+imxrt1010evk = [
+    "imxrt-ral/imxrt1011",
+    "imxrt-hal/imxrt1010",
+    "dep:imxrt1010evk-fcb",
+]
+imxrt1170evk-cm7 = [
+    "imxrt-ral/imxrt1176_cm7",
+    "imxrt-hal/imxrt1170",
+    "dep:imxrt1170evk-fcb",
+]

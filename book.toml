@@ -1,0 +1,9 @@
+[book]
+authors = ["Ian McIntyre"]
+language = "en"
+multilingual = false
+src = "src"
+title = "imxrt-rs"
+
+[output.html]
+git-repository-url = "https://github.com/imxrt-rs/book"

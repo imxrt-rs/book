@@ -1,0 +1,15 @@
+[build]
+dep-info-basedir = "."
+
+# Link with the imxrt-rt linker script.
+[target.thumbv7em-none-eabihf]
+rustflags = [
+    "-C", "link-arg=-Timxrt-link.x",
+]
+
+# Use pyOCD to flash the board.
+runner = [
+    "pyocd", "load",
+    "--target=mimxrt1010",
+    "--format=elf",
+]

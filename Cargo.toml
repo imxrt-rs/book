@@ -1,0 +1,13 @@
+[workspace]
+members = [
+    "examples/ew_boot",
+    "examples/ew_ral",
+    "examples/ew_hal",
+    "examples/ew_bsp",
+]
+
+[patch.crates-io]
+imxrt-hal     = { git = "https://github.com/mciantyre/imxrt-hal" }
+imxrt-ral     = { git = "https://github.com/mciantyre/imxrt-ral" }
+ral-registers = { git = "https://github.com/mciantyre/ral-registers" }
+teensy4-fcb   = { git = "https://github.com/mciantyre/teensy4-rs" }

@@ -1,0 +1,23 @@
+[package]
+name = "ew_ral"
+license = "MIT OR Apache-2.0"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# Cargo.toml
+
+[dependencies]
+imxrt-ral = { version = "0.5", features = ["imxrt1011", "rt"] }
+imxrt-rt = { version = "0.1", features = ["device"] }
+
+# As before...
+imxrt1010evk-fcb = "0.1"
+panic-halt = "0.2"
+
+[build-dependencies]
+imxrt-rt = { version = "0.1", features = ["device"] }
+
+[[bin]]
+name = "ew_ral"
+path = "main.rs"
