@@ -1,0 +1,456 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Board support package - imxrt-rs</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded "><a href="../ecosystem_walkthrough/index.html"><strong aria-hidden="true">1.</strong> Ecosystem walkthrough</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../ecosystem_walkthrough/booting.html"><strong aria-hidden="true">1.1.</strong> Booting</a></li><li class="chapter-item expanded "><a href="../ecosystem_walkthrough/ral.html"><strong aria-hidden="true">1.2.</strong> Register access layer</a></li><li class="chapter-item expanded "><a href="../ecosystem_walkthrough/hal.html"><strong aria-hidden="true">1.3.</strong> Hardware abstraction layer</a></li><li class="chapter-item expanded "><a href="../ecosystem_walkthrough/bsp.html" class="active"><strong aria-hidden="true">1.4.</strong> Board support package</a></li><li class="chapter-item expanded "><a href="../ecosystem_walkthrough/extras.html"><strong aria-hidden="true">1.5.</strong> Extra packages</a></li></ol></li><li class="chapter-item expanded "><a href="../toolchain.html"><strong aria-hidden="true">2.</strong> Toolchain setup</a></li><li class="chapter-item expanded "><a href="../flash_debug.html"><strong aria-hidden="true">3.</strong> Flashing and debugging</a></li><li class="chapter-item expanded "><a href="../external_docs.html"><strong aria-hidden="true">4.</strong> External documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">imxrt-rs</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/imxrt-rs/book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="board-support-package"><a class="header" href="#board-support-package">Board support package</a></h1>
+<p>A board support package (BSP) combines the previously-covered packages -- the
+runtime, boot header, RAL, and HAL -- into a crate for a specific hardware
+system. You can describe this system in terms of</p>
+<ul>
+<li>its i.MX RT processor</li>
+<li>the pinout and supported peripherals</li>
+</ul>
+<p>As of this writing, the imxrt-rs project is not actively maintaining BSPs. But
+with your help and contributions, we're happy to start BSP development. If
+you're interested in using or maintaining a BSP, reach out to an imxrt-rs
+maintainer.</p>
+<p>Some BSPs, like <a href="https://github.com/mciantyre/teensy4-rs">the <code>teensy4-bsp</code></a>,
+depend on imxrt-rs packages but are maintained as separate projects. If you're
+interested in designing a BSP, the <code>teensy4-bsp</code> may have ideas for you.</p>
+<p>The rest of this document has recommendations for BSP design, and it
+demonstrates a small BSP that can manage hardware resources.</p>
+<h2 id="renaming-pads"><a class="header" href="#renaming-pads">Renaming pads</a></h2>
+<p>Your board may have a pad (pin) naming convention that differs from the i.MX RT
+processor pad naming. For example, the Teensy 4.0 and 4.1 identifies pins by
+incrementing numbers starting at zero, and these pins are mapped to i.MX RT 1062
+processor pads. Similarly, an NXP EVK may identify pins by a header &amp; pin number
+combination, rather than a processor pad. Users might prefer using board names,
+rather than processor pad names, in their firmware, and the BSP can provide this
+renaming.</p>
+<p>As a BSP designer, you can choose to rename pads</p>
+<ol>
+<li>directly within the BSP.</li>
+<li>as a separate &quot;pins&quot; package that's co-developed with the BSP.</li>
+</ol>
+<p>If you're choosing the first approach, you can refer to pad types and objects
+through <code>imxrt-hal</code>. See the <code>imxrt-hal</code> documentation and API for more
+information.</p>
+<p>If you're choosing the second approach, you should directly use <a href="https://github.com/imxrt-rs/imxrt-iomuxc">the
+<code>imxrt-iomuxc</code> crate</a>. By designing
+directly to <code>imxrt-iomuxc</code>, you do not need to depend on the larger HAL package
+for your pins package. And since <code>imxrt-hal</code> re-exports <code>imxrt-iomuxc</code>, your
+pins package will still work with <code>imxrt-hal</code>. For more design guidance, see the
+<code>imxrt-iomuxc</code> documentation. This second approach lets others re-use your pins
+package without needing to adopt an <code>imxrt-hal</code> dependency.</p>
+<p>Take a look at <a href="https://github.com/mciantyre/teensy4-rs">the <code>teensy4-pins</code>
+package</a> for an example of a pins
+package. Notice how the package renames, and restricts, the i.MX RT processor
+pads to those supported by the Teensy 4. Also notice how it depends only on
+<code>imxrt-iomuxc</code>, and how it fits within the <code>teensy4-bsp</code> package.</p>
+<h2 id="manage-peripheral-resources"><a class="header" href="#manage-peripheral-resources">Manage peripheral resources</a></h2>
+<p>If you re-read the code presented in this walkthrough, you'll notice that the
+<code>unsafe</code> keyword appears in all three examples. This includes the example that
+uses <code>imxrt-hal</code>. By design, acquiring an <code>imxrt-ral</code> peripheral instance is
+unsafe; see the <code>imxrt-ral</code> API documentation for the rational. This means that
+constructing an <code>imxrt-hal</code> driver needs an <code>unsafe</code> call to acquire the
+peripheral instance.</p>
+<p>A BSP may be the place to implement a resource management policy. This is
+especially true if the BSP</p>
+<ul>
+<li>only supports a single application with a single entrypoint.</li>
+<li>dictates the available hardware resources for the user.</li>
+</ul>
+<p>If your BSP follows these concepts, you can design your BSP to configure and
+release hardware resources to the user. With a simple atomic boolean, the BSP
+can ensure that resources are only configured and released once, meeting the
+safety requirements for <code>imxrt-ral</code> instance access.</p>
+<p>For a rough example of this pattern, see the <code>board</code> package maintained in <a href="https://github.com/imxrt-rs/imxrt-hal">the
+<code>imxrt-hal</code> repository</a>. The <code>board</code>
+package is designed to expedite hardware testing and example development, and it
+handles <code>unsafe</code> instance access on behalf of the example user.</p>
+<h2 id="a-small-multi-bsp-example"><a class="header" href="#a-small-multi-bsp-example">A small multi-BSP example</a></h2>
+<p>This small BSP example demonstrates the peripheral resource management concept,
+though with some limitations. It builds on <a href="./hal.html">the previous example</a> that
+turns on one board's LED. To make it interesting, the example supports three
+different boards:</p>
+<ul>
+<li>Teensy 4</li>
+<li>i.MXRT1010EVK</li>
+<li>i.MXRT1170EVK (Cortex-M7)</li>
+</ul>
+<p>However, to stay concise, the example only demonstrates resource initialization
+for the i.MXRT1010EVK.</p>
+<p>The example uses Cargo features to select a target board. The <code>Cargo.toml</code>
+snippet below demonstrates the dependencies and feature configurations. A
+feature combines</p>
+<ul>
+<li>an <code>imxrt-ral</code> chip selection</li>
+<li>an <code>imxrt-hal</code> family selection</li>
+<li>a boot header</li>
+</ul>
+<p>to describe a board. The <code>imxrt-ral</code> and <code>imxrt-hal</code> features ensure that the
+peripherals and drivers are configured for the board's processor. Similarly, the
+boot header ensures that the runtime can boot the board's processor.</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[dependencies]
+imxrt-hal = { version = &quot;0.5.0-alpha&quot; }
+imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;rt&quot;] }
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+
+teensy4-fcb      = { version = &quot;0.4&quot;, optional = true }
+imxrt1010evk-fcb = { version = &quot;0.1&quot;, optional = true }
+imxrt1170evk-fcb = { version = &quot;0.1&quot;, optional = true }
+
+panic-halt = &quot;0.2&quot;
+cfg-if = &quot;1&quot;
+
+[build-dependencies]
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+
+[features]
+# board = [
+#     &quot;imxrt-ral/${CHIP},
+#     &quot;imxrt-hal/${FAMILY},
+#     &quot;${BOOT_HEADER},
+# ]
+teensy4 = [
+    &quot;imxrt-ral/imxrt1062&quot;,
+    &quot;imxrt-hal/imxrt1060&quot;,
+    &quot;dep:teensy4-fcb&quot;,
+]
+imxrt1010evk = [
+    &quot;imxrt-ral/imxrt1011&quot;,
+    &quot;imxrt-hal/imxrt1010&quot;,
+    &quot;dep:imxrt1010evk-fcb&quot;,
+]
+imxrt1170evk-cm7 = [
+    &quot;imxrt-ral/imxrt1176_cm7&quot;,
+    &quot;imxrt-hal/imxrt1170&quot;,
+    &quot;dep:imxrt1170evk-fcb&quot;,
+]
+</code></pre>
+<p>The <code>build.rs</code> runtime configuration is aware of these three boards, and it
+configures the runtime based on the board's chip and flash size.</p>
+<pre><pre class="playground"><code class="language-rust">//! build.rs
+
+use imxrt_rt::{Family, RuntimeBuilder};
+
+struct Board {
+    family: Family,
+    flash_size: usize,
+}
+
+const BOARD: Board = if cfg!(feature = &quot;teensy4&quot;) {
+    Board {
+        family: Family::Imxrt1060,
+        flash_size: 1984 * 1024,
+    }
+} else if cfg!(feature = &quot;imxrt1010evk&quot;) {
+    Board {
+        family: Family::Imxrt1010,
+        flash_size: 16 * 1024 * 1024,
+    }
+} else if cfg!(feature = &quot;imxrt1170evk-cm7&quot;) {
+    Board {
+        family: Family::Imxrt1170,
+        flash_size: 16 * 1024 * 1024,
+    }
+} else {
+    panic!(&quot;No board selected!&quot;)
+};
+
+fn main() {
+    RuntimeBuilder::from_flexspi(BOARD.family, BOARD.flash_size)
+        .build()
+        .unwrap();
+}
+</code></pre></pre>
+<p>Here's the application code. The <code>board</code> module conditionally exposes a board's
+<code>Resources</code> based on the board selection.</p>
+<p>By convention, all boards define a <code>Resources</code> struct, which can be <code>take</code>n. The
+object contains a <code>led</code> member of type <code>Led</code>. The <code>Led</code> type is an alias for an
+<code>imxrt-hal</code> GPIO output, which wraps a specific processor pin.</p>
+<p>Notice that there is no <code>unsafe</code> in this application code. The <code>board</code> module,
+and its submodules, make sure that board <code>Resources</code> are only taken once. Our
+dependencies are not also constructing <code>imxrt-ral</code> peripheral instances, which
+means that all <code>unsafe</code> peripheral instance access happens within <code>board</code>.</p>
+<pre><pre class="playground"><code class="language-rust">//! main.rs
+
+#![no_main]
+#![no_std]
+
+use imxrt_hal as hal;
+use imxrt_ral as ral;
+
+use imxrt_rt::entry;
+use panic_halt as _;
+
+mod board {
+    use core::sync::atomic::{AtomicBool, Ordering};
+
+    /// Called by a board implementation to mark peripherals taken.
+    fn take() -&gt; Option&lt;()&gt; {
+        static BOARD_FREE: AtomicBool = AtomicBool::new(true);
+        BOARD_FREE.swap(false, Ordering::SeqCst).then_some(())
+    }
+
+    cfg_if::cfg_if! {
+        if #[cfg(feature = &quot;teensy4&quot;)] {
+            mod teensy4;
+            pub use teensy4::Resources;
+        } else if #[cfg(feature = &quot;imxrt1010evk&quot;)] {
+            mod imxrt1010evk;
+            pub use imxrt1010evk::Resources;
+        } else if #[cfg(feature = &quot;imxrt1170evk-cm7&quot;)] {
+            mod imxrt1170evk_cm7;
+            pub use imxrt1170evk_cm7::Resources;
+        } else {
+            compile_error!(&quot;No board selected!&quot;);
+        }
+    }
+}
+
+#[entry]
+fn main() -&gt; ! {
+    let board::Resources { led, .. } = board::Resources::take().unwrap();
+    led.set();
+
+    loop {}
+}
+</code></pre></pre>
+<p>The i.MXRT1010EVK board implementation is shown below. The implementation
+demonstrates the convention of items expected by the application. If the call to
+<code>super::take()</code> returns <code>None</code>, it means that the <code>imxrt-ral</code> peripheral
+instances already exist, and <code>board</code> refuses to alias those instances and their
+wrapping <code>Resources</code>. Otherwise, this is the first time that <code>Resources</code> are
+being taken, so it's safe to create <code>imxrt-ral</code> peripheral instances and their
+drivers.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! board/imxrt1010evk.rs
+
+use crate::{
+    hal::{self, iomuxc::pads},
+    ral,
+};
+use imxrt1010evk_fcb as _;
+
+pub type Led = hal::gpio::Output&lt;pads::gpio::GPIO_11&gt;;
+
+#[non_exhaustive]
+pub struct Resources {
+    pub led: Led,
+}
+
+impl Resources {
+    pub fn take() -&gt; Option&lt;Self&gt; {
+        super::take()?;
+
+        let iomuxc = unsafe { ral::iomuxc::IOMUXC::instance() };
+        let gpio1 = unsafe { ral::gpio::GPIO1::instance() };
+
+        let mut port = hal::gpio::Port::new(gpio1);
+        let pads = hal::iomuxc::into_pads(iomuxc);
+        let led = port.output(pads.gpio.p11);
+        Some(Resources { led })
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>board</code> implementation also uses the boot header crate, meeting the
+requirements discussed in <a href="./booting.html">booting</a>. Although it's not depicted in
+this example, the <code>Led</code> type and <code>Resources::take()</code> implementation vary for
+each board. And although it's not required for this small BSP, a
+<code>non_exhaustive</code> attribute on <code>Resources</code> requires that users match only the
+board resources they expect, permitting boards to add new resources without
+breaking users.</p>
+<p>A BSP following this design can manage lower-level peripheral instances for the
+user, and present higher-level drivers to the user. Furthermore, it presents an
+interface that may let users port their applications across different boards.
+However, the approach has some limitations.</p>
+<h3 id="limitations"><a class="header" href="#limitations">Limitations</a></h3>
+<p>As of this writing, the developer is the <code>imxrt-ral</code> resource management
+strategy. Specifically, the developer must ensure that it's safe to acquire
+<code>imxrt-ral</code> peripheral instances in their system. In this BSP example, the
+developer knows that this application is the only software executing on the
+hardware, so it's the sole owner of the <code>imxrt-ral</code> peripheral instances.
+However, it may not be safe to deploy this BSP in systems where multiple (Rust)
+applications concurrently execute and use the same hardware resources. In lieu
+of an integrated resource management strategy, the <code>unsafe</code> instance access is
+the developer's cue to handle these possibilities, or to document assumptions.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../ecosystem_walkthrough/hal.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="../ecosystem_walkthrough/extras.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../ecosystem_walkthrough/hal.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="../ecosystem_walkthrough/extras.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

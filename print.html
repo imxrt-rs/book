@@ -1,0 +1,967 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>imxrt-rs</title>
+        <meta name="robots" content="noindex" />
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/index.html"><strong aria-hidden="true">1.</strong> Ecosystem walkthrough</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ecosystem_walkthrough/booting.html"><strong aria-hidden="true">1.1.</strong> Booting</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/ral.html"><strong aria-hidden="true">1.2.</strong> Register access layer</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/hal.html"><strong aria-hidden="true">1.3.</strong> Hardware abstraction layer</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/bsp.html"><strong aria-hidden="true">1.4.</strong> Board support package</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/extras.html"><strong aria-hidden="true">1.5.</strong> Extra packages</a></li></ol></li><li class="chapter-item expanded "><a href="toolchain.html"><strong aria-hidden="true">2.</strong> Toolchain setup</a></li><li class="chapter-item expanded "><a href="flash_debug.html"><strong aria-hidden="true">3.</strong> Flashing and debugging</a></li><li class="chapter-item expanded "><a href="external_docs.html"><strong aria-hidden="true">4.</strong> External documentation</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">imxrt-rs</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/imxrt-rs/book" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="imxrt-rs"><a class="header" href="#imxrt-rs">imxrt-rs</a></h1>
+<p>This book includes documentation that pertains to most imxrt-rs development.
+It's for users who want to learn more about imxrt-rs Rust packages, and for
+users who want to use imxrt-rs packages in their projects.</p>
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h2>
+<p>If you're not familiar with our work, take a look at the <a href="./ecosystem_walkthrough/">ecosystem
+walkthrough</a>. The walkthrough demonstrates how you can
+combine imxrt-rs packages to support your embedded Rust development.</p>
+<p>If you're using an imxrt-rs package, consult the <a href="./toolchain.html">toolchain
+setup</a> to prepare your development environment. Our recommended
+<a href="./flash_debug.html">flashing and debugging tools</a> can help you deploy your
+application on your hardware.</p>
+<p>For links to helpful references, check out our <a href="./external_docs.html">external documentation
+sources</a>.</p>
+<h3 id="about"><a class="header" href="#about">About</a></h3>
+<p>We provide community support for using Rust on NXP's i.MX RT processors. We
+develop hardware drivers with
+<a href="https://crates.io/crates/embedded-hal">embedded-hal</a> compatibility. We also
+provide packages for embedded application development and debugging. To support
+these goals, we collaborate with the broader embedded Rust community.</p>
+<p>By supporting this platform, we want to improve the general quality and
+accessibility of embedded Rust.</p>
+<h3 id="contact"><a class="header" href="#contact">Contact</a></h3>
+<ul>
+<li>Join the Matrix chat:
+<a href="https://matrix.to/#/#imxrt-rs:matrix.org">#imxrt-rs:matrix.org</a>.</li>
+<li>Reach out on <a href="https://github.com/imxrt-rs">GitHub</a> issues and discussions.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="ecosystem-walkthrough"><a class="header" href="#ecosystem-walkthrough">Ecosystem walkthrough</a></h1>
+<p>The imxrt-rs project develops various packages to support embedded Rust
+development on i.MX RT microcontrollers. This walkthrough demonstrates core
+<code>no_std</code> imxrt-rs packages by example. The guide shows</p>
+<ul>
+<li>what crates are necessary to boot an i.MX RT processor.</li>
+<li>how the register access layer simplifies register access and resource
+ownership.</li>
+<li>how to use drivers in the hardware abstraction layer.</li>
+</ul>
+<p>The walkthrough steps through a series of examples that turns on a evaluation
+kit's LED. Each example introduces one or more imxrt-rs package and briefly
+explains the package's role in the ecosystem. For more information on a package,
+consult its documentation.</p>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<p>Before reading this walkthrough, it helps to know general concepts of embedded
+Rust development. Familiarize yourself with <a href="https://docs.rust-embedded.org/book/intro/index.html">The Embedded Rust
+Book</a> before reading this
+walkthrough. The walkthrough specifically assumes knowledge of the
+<a href="https://docs.rust-embedded.org/book/portability/index.html">portability</a>
+concepts described in the book.</p>
+<h2 id="setup"><a class="header" href="#setup">Setup</a></h2>
+<p>All examples target NXP's i.MXRT1010EVK development board. Nevertheless, the
+concepts apply for all i.MX RT microcontrollers supported by the imxrt-rs
+project.</p>
+<p>The following <a href="https://doc.rust-lang.org/cargo/reference/config.html">Cargo
+configuration</a> applies to
+all examples.</p>
+<pre><code class="language-toml"># Link with the imxrt-rt linker script.
+[target.thumbv7em-none-eabihf]
+rustflags = [
+    &quot;-C&quot;, &quot;link-arg=-Timxrt-link.x&quot;,
+]
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="booting"><a class="header" href="#booting">Booting</a></h1>
+<p>In order to boot Rust firmware on an i.MX RT processor, you need at least three
+crates:</p>
+<ol>
+<li>a crate that defines <a href="ecosystem_walkthrough/booting.html#boot-headers">a compatible boot header</a> for your
+system.</li>
+<li>the <a href="ecosystem_walkthrough/booting.html#runtime"><code>imxrt-rt</code> runtime</a>.</li>
+<li>a panic handler.</li>
+</ol>
+<p>A <code>Cargo.toml</code> package manifest with these dependencies is shown below.</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[dependencies]
+# The boot header package.
+imxrt1010evk-fcb = &quot;0.1&quot;
+# The runtime.
+imxrt-rt = &quot;0.1&quot;
+# The panic handler.
+panic-halt = &quot;0.2&quot;
+
+[build-dependencies]
+# The same runtime as above.
+imxrt-rt = &quot;0.1&quot;
+</code></pre>
+<p>The runtime is configured in an application's <code>build.rs</code> script, so the
+dependency is included twice. The following build script configures a default
+runtime for the i.MXRT1010EVK development board.</p>
+<pre><pre class="playground"><code class="language-rust">//! build.rs
+
+use imxrt_rt::{Family, RuntimeBuilder};
+
+fn main() {
+    // The iMXRT1010EVK has 16 MiB of flash.
+    RuntimeBuilder::from_flexspi(Family::Imxrt1010, 16 * 1024 * 1024)
+        .build()
+        .unwrap();
+}
+</code></pre></pre>
+<p>Finally, <code>main.rs</code> defines the program that turns on the i.MXRT1010EVK's LED.</p>
+<pre><pre class="playground"><code class="language-rust">//! main.rs
+
+#![no_main]
+#![no_std]
+
+// Include the boot header like this. Otherwise,
+// it may be removed by the linker.
+use imxrt1010evk_fcb as _;
+
+// Same goes for the panic handler.
+use panic_halt as _;
+
+// The entry macro adorns your main function.
+use imxrt_rt::entry;
+
+const LED_OFFSET: u32 = 1 &lt;&lt; 11;
+
+// Register addresses come from the reference manual.
+const IOMUXC_MUX_CTL_PAD_GPIO_11: *mut u32 = 0x401F_8090 as _;
+const GPIO1_GDIR: *mut u32 = (0x401B_8000 + 0x04) as _;
+const GPIO1_DR_SET: *mut u32 = (0x401B_8000 + 0x84) as _;
+
+#[entry]
+fn main() -&gt; ! {
+    unsafe {
+        // Configure the pad named &quot;GPIO_11&quot; as a GPIO pin
+        // (as opposed to a UART TX pin, for example).
+        IOMUXC_MUX_CTL_PAD_GPIO_11.write_volatile(5);
+
+        // Set the GPIO as an output with a RMW operation.
+        let mut gpio1_gdir = GPIO1_GDIR.read_volatile();
+        gpio1_gdir |= LED_OFFSET;
+        GPIO1_GDIR.write_volatile(gpio1_gdir);
+
+        // Turn on the LED.
+        GPIO1_DR_SET.write_volatile(LED_OFFSET);
+    }
+    loop {}
+}
+</code></pre></pre>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<p>This example is sufficient to boot the processor and run a very basic
+application. However, it's not a good demonstration of how to write an embedded
+Rust application. In particular,</p>
+<ul>
+<li>the application needs to know register addresses in order to configure
+IOMUXC pads and GPIO outputs.</li>
+<li>register access is unsafe, since we're reading and writing to raw pointers.</li>
+<li>we need to explicitly use volatile reads and writes, and manually code
+read-modify-write actions on register fields.</li>
+<li>we are not modeling ownership of peripherals.</li>
+</ul>
+<p>The next section introduces a register access layer that provides register
+addresses, exposes safe and convenient register access, and lets you model
+peripheral ownership.</p>
+<p>The remaining sections describe the boot headers and runtime used in this
+example.</p>
+<h2 id="boot-headers"><a class="header" href="#boot-headers">Boot headers</a></h2>
+<p>The specifics of a boot header vary by system. For example, if your system
+interfaces NOR flash using a FlexSPI peripheral, you'll need a crate that
+provides a FlexSPI configuration block (FCB). On the other hand, systems that
+use parallel NAND flash may need a different kind of boot header. Consult your
+processor's reference manual for more information about boot headers.</p>
+<p>As an user of these crates, you simply need to include the proper boot header
+for your system. imxrt-rs maintains FCBs for various development boards,
+including</p>
+<ul>
+<li>the i.MXRT1010EVK</li>
+<li>the i.MXRT1170EVK</li>
+</ul>
+<p>These FCBs are developed alongside the <a href="https://github.com/imxrt-rs/imxrt-boot-gen"><code>imxrt-boot-gen</code>
+package</a>. If no boot header exists
+for your system, use <code>imxrt-boot-gen</code> to define your system's boot header.</p>
+<p>Other boot headers, like the
+<a href="https://github.com/mciantyre/teensy4-rs"><code>teensy4-fcb</code></a>, may be maintained in
+separate projects. Boot headers may also be integrated directly within a board
+support package.</p>
+<h2 id="runtime"><a class="header" href="#runtime">Runtime</a></h2>
+<p>The <a href="https://github.com/imxrt-rs/imxrt-rt"><code>imxrt-rt</code> runtime</a> is an extension
+of the <a href="https://crates.io/crates/cortex-m-rt"><code>cortex-m-rt</code> package</a>. The custom
+runtime satisfies the boot requirements of i.MX RT processors. It also lets you
+customize the program memory layout and utilize tightly-coupled memory (TCM)
+regions through the FlexRAM interface.</p>
+<p><code>imxrt-rt</code> uses a convention of symbol names and link sections to properly place
+boot headers. See the runtime documentation for a discussion on this convention.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="register-access-layer"><a class="header" href="#register-access-layer">Register access layer</a></h1>
+<p><a href="https://github.com/imxrt-rs/imxrt-ral">The <code>imxrt-ral</code> crate</a> provides a
+register access layer (RAL) for i.MX RT 10xx and 11xx microcontrollers. Use the
+RAL to</p>
+<ul>
+<li>manage peripherals as low-level resources.</li>
+<li>conveniently access registers and register fields.</li>
+</ul>
+<p><code>imxrt-ral</code> also provides a device-specific interrupt table. Once you link the
+runtime with the RAL,</p>
+<ul>
+<li>enable <code>imxrt-rt</code>'s <code>&quot;device&quot;</code> feature.</li>
+<li>enable <code>imxrt-ral</code>'s <code>&quot;rt&quot;</code> feature.</li>
+</ul>
+<blockquote>
+<p>ℹ️ The RAL is very similar to the peripheral access crate (PAC) found in other
+embedded Rust ecosystems. The major difference is the API used to access
+registers.</p>
+</blockquote>
+<p>This example improves on <a href="ecosystem_walkthrough/./booting.html">the previous walkthrough</a> by using
+<code>imxrt-ral</code> to access registers. Note the <code>imxrt-ral</code> feature flag for the
+target MCU. Also note that the <code>&quot;device&quot;</code> feature for the runtime is enabled,
+and the <code>&quot;rt&quot;</code> feature for <code>imxrt-ral</code> is enabled; even though the example
+doesn't use interrupts, you should prefer the device-specific vector table when
+available.</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[dependencies]
+imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+
+# As before...
+imxrt1010evk-fcb = &quot;0.1&quot;
+panic-halt = &quot;0.2&quot;
+
+[build-dependencies]
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+</code></pre>
+<pre><pre class="playground"><code class="language-rust">//! build.rs (unchanged)
+
+use imxrt_rt::{Family, RuntimeBuilder};
+
+fn main() {
+    RuntimeBuilder::from_flexspi(Family::Imxrt1010, 16 * 1024 * 1024)
+        .build()
+        .unwrap();
+}
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">//! main.rs
+
+#![no_main]
+#![no_std]
+
+use imxrt_ral as ral;
+
+use imxrt1010evk_fcb as _;
+use imxrt_rt::entry;
+use panic_halt as _;
+
+const LED_OFFSET: u32 = 1 &lt;&lt; 11;
+
+#[entry]
+fn main() -&gt; ! {
+    // Safety: we're the only code that &quot;owns&quot; the IOMUXC and GPIO1 peripherals.
+    let iomuxc = unsafe { ral::iomuxc::IOMUXC::instance() };
+    let gpio1 = unsafe { ral::gpio::GPIO1::instance() };
+
+    // Configure the pad named &quot;GPIO_11&quot; as a GPIO pin
+    // (as opposed to a UART TX pin, for example).
+    ral::write_reg!(ral::iomuxc, iomuxc, SW_MUX_CTL_PAD_GPIO_11, 5);
+    // Set the GPIO as an output with a RMW operation.
+    ral::modify_reg!(ral::gpio, gpio1, GDIR, |gdir| gdir | LED_OFFSET);
+    // Turn on the LED.
+    ral::write_reg!(ral::gpio, gpio1, DR_SET, LED_OFFSET);
+
+    loop {}
+}
+</code></pre></pre>
+<p>Acquiring peripheral instances is still <code>unsafe</code>. However, macros make it easier
+to read, write, and modify registers; and there's no need to maintain register
+addresses.</p>
+<p>Consider using <code>imxrt-ral</code> when you want to implement higher-level peripheral
+drivers. These kinds of convenient, re-usable, and portable peripheral drivers
+are the topic of the next section: the hardware abstraction layer.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hardware-abstraction-layer"><a class="header" href="#hardware-abstraction-layer">Hardware abstraction layer</a></h1>
+<p><a href="https://github.com/imxrt-rs/imxrt-hal">The <code>imxrt-hal</code> crate</a> provides the
+hardware abstraction layer (HAL) for i.MX RT microcontrollers. The HAL includes
+re-usable hardware drivers for 10xx and 11xx MCUs. Most of the HAL's drivers
+implement their corresponding traits from
+<a href="https://docs.rs/embedded-hal/latest/embedded_hal/"><code>embedded-hal</code></a>, allowing
+you to pair the hardware driver with third-party sensor, actuator, and device
+drivers.</p>
+<p><code>imxrt-hal</code> drivers adapt the low-level peripheral instances provided by
+<code>imxrt-ral</code>, so you can use the HAL by adding it as another package in your
+project. Unlike the <a href="ecosystem_walkthrough/./ral.html">previous example</a>, this new example use
+<code>imxrt-hal</code> APIs to access pads and prepare a GPIO output.</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[dependencies]
+imxrt-hal = { version = &quot;0.5.0-alpha&quot;, features = [&quot;imxrt1010&quot;] }
+
+# As before...
+imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+imxrt1010evk-fcb = &quot;0.1&quot;
+panic-halt = &quot;0.2&quot;
+
+[build-dependencies]
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+</code></pre>
+<pre><pre class="playground"><code class="language-rust">//! build.rs (unchanged)
+
+use imxrt_rt::{Family, RuntimeBuilder};
+
+fn main() {
+    RuntimeBuilder::from_flexspi(Family::Imxrt1010, 16 * 1024 * 1024)
+        .build()
+        .unwrap();
+}
+</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">//! main.rs
+
+#![no_main]
+#![no_std]
+
+use imxrt_hal as hal;
+use imxrt_ral as ral;
+
+use imxrt1010evk_fcb as _;
+use imxrt_rt::entry;
+use panic_halt as _;
+
+#[entry]
+fn main() -&gt; ! {
+    // Safety: we're the only code that &quot;owns&quot; the IOMUXC and GPIO1 peripherals.
+    let iomuxc = unsafe { ral::iomuxc::IOMUXC::instance() };
+    let gpio1 = unsafe { ral::gpio::GPIO1::instance() };
+
+    let mut gpio1 = hal::gpio::Port::new(gpio1);
+    let pads = hal::iomuxc::into_pads(iomuxc);
+
+    // Configures the pad named &quot;GPIO_11&quot; as a GPIO output.
+    let led = gpio1.output(pads.gpio.p11);
+    // Turn on the LED.
+    led.set();
+
+    loop {}
+}
+</code></pre></pre>
+<h2 id="try-the-hal"><a class="header" href="#try-the-hal">Try the HAL</a></h2>
+<p>The <code>imxrt-hal</code> repository includes a collection of hardware examples that work
+on various boards, including the</p>
+<ul>
+<li>Teensy 4 (both 4.0 and 4.1).</li>
+<li>NXP's i.MXRT1010EVK.</li>
+<li>Cortex-M7 of NXP's i.MXRT1170EVK.</li>
+</ul>
+<p>You can use these examples to try the HAL on your hardware. See <a href="https://github.com/imxrt-rs/imxrt-hal">the repository
+documentation</a> for more information.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="board-support-package"><a class="header" href="#board-support-package">Board support package</a></h1>
+<p>A board support package (BSP) combines the previously-covered packages -- the
+runtime, boot header, RAL, and HAL -- into a crate for a specific hardware
+system. You can describe this system in terms of</p>
+<ul>
+<li>its i.MX RT processor</li>
+<li>the pinout and supported peripherals</li>
+</ul>
+<p>As of this writing, the imxrt-rs project is not actively maintaining BSPs. But
+with your help and contributions, we're happy to start BSP development. If
+you're interested in using or maintaining a BSP, reach out to an imxrt-rs
+maintainer.</p>
+<p>Some BSPs, like <a href="https://github.com/mciantyre/teensy4-rs">the <code>teensy4-bsp</code></a>,
+depend on imxrt-rs packages but are maintained as separate projects. If you're
+interested in designing a BSP, the <code>teensy4-bsp</code> may have ideas for you.</p>
+<p>The rest of this document has recommendations for BSP design, and it
+demonstrates a small BSP that can manage hardware resources.</p>
+<h2 id="renaming-pads"><a class="header" href="#renaming-pads">Renaming pads</a></h2>
+<p>Your board may have a pad (pin) naming convention that differs from the i.MX RT
+processor pad naming. For example, the Teensy 4.0 and 4.1 identifies pins by
+incrementing numbers starting at zero, and these pins are mapped to i.MX RT 1062
+processor pads. Similarly, an NXP EVK may identify pins by a header &amp; pin number
+combination, rather than a processor pad. Users might prefer using board names,
+rather than processor pad names, in their firmware, and the BSP can provide this
+renaming.</p>
+<p>As a BSP designer, you can choose to rename pads</p>
+<ol>
+<li>directly within the BSP.</li>
+<li>as a separate &quot;pins&quot; package that's co-developed with the BSP.</li>
+</ol>
+<p>If you're choosing the first approach, you can refer to pad types and objects
+through <code>imxrt-hal</code>. See the <code>imxrt-hal</code> documentation and API for more
+information.</p>
+<p>If you're choosing the second approach, you should directly use <a href="https://github.com/imxrt-rs/imxrt-iomuxc">the
+<code>imxrt-iomuxc</code> crate</a>. By designing
+directly to <code>imxrt-iomuxc</code>, you do not need to depend on the larger HAL package
+for your pins package. And since <code>imxrt-hal</code> re-exports <code>imxrt-iomuxc</code>, your
+pins package will still work with <code>imxrt-hal</code>. For more design guidance, see the
+<code>imxrt-iomuxc</code> documentation. This second approach lets others re-use your pins
+package without needing to adopt an <code>imxrt-hal</code> dependency.</p>
+<p>Take a look at <a href="https://github.com/mciantyre/teensy4-rs">the <code>teensy4-pins</code>
+package</a> for an example of a pins
+package. Notice how the package renames, and restricts, the i.MX RT processor
+pads to those supported by the Teensy 4. Also notice how it depends only on
+<code>imxrt-iomuxc</code>, and how it fits within the <code>teensy4-bsp</code> package.</p>
+<h2 id="manage-peripheral-resources"><a class="header" href="#manage-peripheral-resources">Manage peripheral resources</a></h2>
+<p>If you re-read the code presented in this walkthrough, you'll notice that the
+<code>unsafe</code> keyword appears in all three examples. This includes the example that
+uses <code>imxrt-hal</code>. By design, acquiring an <code>imxrt-ral</code> peripheral instance is
+unsafe; see the <code>imxrt-ral</code> API documentation for the rational. This means that
+constructing an <code>imxrt-hal</code> driver needs an <code>unsafe</code> call to acquire the
+peripheral instance.</p>
+<p>A BSP may be the place to implement a resource management policy. This is
+especially true if the BSP</p>
+<ul>
+<li>only supports a single application with a single entrypoint.</li>
+<li>dictates the available hardware resources for the user.</li>
+</ul>
+<p>If your BSP follows these concepts, you can design your BSP to configure and
+release hardware resources to the user. With a simple atomic boolean, the BSP
+can ensure that resources are only configured and released once, meeting the
+safety requirements for <code>imxrt-ral</code> instance access.</p>
+<p>For a rough example of this pattern, see the <code>board</code> package maintained in <a href="https://github.com/imxrt-rs/imxrt-hal">the
+<code>imxrt-hal</code> repository</a>. The <code>board</code>
+package is designed to expedite hardware testing and example development, and it
+handles <code>unsafe</code> instance access on behalf of the example user.</p>
+<h2 id="a-small-multi-bsp-example"><a class="header" href="#a-small-multi-bsp-example">A small multi-BSP example</a></h2>
+<p>This small BSP example demonstrates the peripheral resource management concept,
+though with some limitations. It builds on <a href="ecosystem_walkthrough/./hal.html">the previous example</a> that
+turns on one board's LED. To make it interesting, the example supports three
+different boards:</p>
+<ul>
+<li>Teensy 4</li>
+<li>i.MXRT1010EVK</li>
+<li>i.MXRT1170EVK (Cortex-M7)</li>
+</ul>
+<p>However, to stay concise, the example only demonstrates resource initialization
+for the i.MXRT1010EVK.</p>
+<p>The example uses Cargo features to select a target board. The <code>Cargo.toml</code>
+snippet below demonstrates the dependencies and feature configurations. A
+feature combines</p>
+<ul>
+<li>an <code>imxrt-ral</code> chip selection</li>
+<li>an <code>imxrt-hal</code> family selection</li>
+<li>a boot header</li>
+</ul>
+<p>to describe a board. The <code>imxrt-ral</code> and <code>imxrt-hal</code> features ensure that the
+peripherals and drivers are configured for the board's processor. Similarly, the
+boot header ensures that the runtime can boot the board's processor.</p>
+<pre><code class="language-toml"># Cargo.toml
+
+[dependencies]
+imxrt-hal = { version = &quot;0.5.0-alpha&quot; }
+imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;rt&quot;] }
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+
+teensy4-fcb      = { version = &quot;0.4&quot;, optional = true }
+imxrt1010evk-fcb = { version = &quot;0.1&quot;, optional = true }
+imxrt1170evk-fcb = { version = &quot;0.1&quot;, optional = true }
+
+panic-halt = &quot;0.2&quot;
+cfg-if = &quot;1&quot;
+
+[build-dependencies]
+imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
+
+[features]
+# board = [
+#     &quot;imxrt-ral/${CHIP},
+#     &quot;imxrt-hal/${FAMILY},
+#     &quot;${BOOT_HEADER},
+# ]
+teensy4 = [
+    &quot;imxrt-ral/imxrt1062&quot;,
+    &quot;imxrt-hal/imxrt1060&quot;,
+    &quot;dep:teensy4-fcb&quot;,
+]
+imxrt1010evk = [
+    &quot;imxrt-ral/imxrt1011&quot;,
+    &quot;imxrt-hal/imxrt1010&quot;,
+    &quot;dep:imxrt1010evk-fcb&quot;,
+]
+imxrt1170evk-cm7 = [
+    &quot;imxrt-ral/imxrt1176_cm7&quot;,
+    &quot;imxrt-hal/imxrt1170&quot;,
+    &quot;dep:imxrt1170evk-fcb&quot;,
+]
+</code></pre>
+<p>The <code>build.rs</code> runtime configuration is aware of these three boards, and it
+configures the runtime based on the board's chip and flash size.</p>
+<pre><pre class="playground"><code class="language-rust">//! build.rs
+
+use imxrt_rt::{Family, RuntimeBuilder};
+
+struct Board {
+    family: Family,
+    flash_size: usize,
+}
+
+const BOARD: Board = if cfg!(feature = &quot;teensy4&quot;) {
+    Board {
+        family: Family::Imxrt1060,
+        flash_size: 1984 * 1024,
+    }
+} else if cfg!(feature = &quot;imxrt1010evk&quot;) {
+    Board {
+        family: Family::Imxrt1010,
+        flash_size: 16 * 1024 * 1024,
+    }
+} else if cfg!(feature = &quot;imxrt1170evk-cm7&quot;) {
+    Board {
+        family: Family::Imxrt1170,
+        flash_size: 16 * 1024 * 1024,
+    }
+} else {
+    panic!(&quot;No board selected!&quot;)
+};
+
+fn main() {
+    RuntimeBuilder::from_flexspi(BOARD.family, BOARD.flash_size)
+        .build()
+        .unwrap();
+}
+</code></pre></pre>
+<p>Here's the application code. The <code>board</code> module conditionally exposes a board's
+<code>Resources</code> based on the board selection.</p>
+<p>By convention, all boards define a <code>Resources</code> struct, which can be <code>take</code>n. The
+object contains a <code>led</code> member of type <code>Led</code>. The <code>Led</code> type is an alias for an
+<code>imxrt-hal</code> GPIO output, which wraps a specific processor pin.</p>
+<p>Notice that there is no <code>unsafe</code> in this application code. The <code>board</code> module,
+and its submodules, make sure that board <code>Resources</code> are only taken once. Our
+dependencies are not also constructing <code>imxrt-ral</code> peripheral instances, which
+means that all <code>unsafe</code> peripheral instance access happens within <code>board</code>.</p>
+<pre><pre class="playground"><code class="language-rust">//! main.rs
+
+#![no_main]
+#![no_std]
+
+use imxrt_hal as hal;
+use imxrt_ral as ral;
+
+use imxrt_rt::entry;
+use panic_halt as _;
+
+mod board {
+    use core::sync::atomic::{AtomicBool, Ordering};
+
+    /// Called by a board implementation to mark peripherals taken.
+    fn take() -&gt; Option&lt;()&gt; {
+        static BOARD_FREE: AtomicBool = AtomicBool::new(true);
+        BOARD_FREE.swap(false, Ordering::SeqCst).then_some(())
+    }
+
+    cfg_if::cfg_if! {
+        if #[cfg(feature = &quot;teensy4&quot;)] {
+            mod teensy4;
+            pub use teensy4::Resources;
+        } else if #[cfg(feature = &quot;imxrt1010evk&quot;)] {
+            mod imxrt1010evk;
+            pub use imxrt1010evk::Resources;
+        } else if #[cfg(feature = &quot;imxrt1170evk-cm7&quot;)] {
+            mod imxrt1170evk_cm7;
+            pub use imxrt1170evk_cm7::Resources;
+        } else {
+            compile_error!(&quot;No board selected!&quot;);
+        }
+    }
+}
+
+#[entry]
+fn main() -&gt; ! {
+    let board::Resources { led, .. } = board::Resources::take().unwrap();
+    led.set();
+
+    loop {}
+}
+</code></pre></pre>
+<p>The i.MXRT1010EVK board implementation is shown below. The implementation
+demonstrates the convention of items expected by the application. If the call to
+<code>super::take()</code> returns <code>None</code>, it means that the <code>imxrt-ral</code> peripheral
+instances already exist, and <code>board</code> refuses to alias those instances and their
+wrapping <code>Resources</code>. Otherwise, this is the first time that <code>Resources</code> are
+being taken, so it's safe to create <code>imxrt-ral</code> peripheral instances and their
+drivers.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>//! board/imxrt1010evk.rs
+
+use crate::{
+    hal::{self, iomuxc::pads},
+    ral,
+};
+use imxrt1010evk_fcb as _;
+
+pub type Led = hal::gpio::Output&lt;pads::gpio::GPIO_11&gt;;
+
+#[non_exhaustive]
+pub struct Resources {
+    pub led: Led,
+}
+
+impl Resources {
+    pub fn take() -&gt; Option&lt;Self&gt; {
+        super::take()?;
+
+        let iomuxc = unsafe { ral::iomuxc::IOMUXC::instance() };
+        let gpio1 = unsafe { ral::gpio::GPIO1::instance() };
+
+        let mut port = hal::gpio::Port::new(gpio1);
+        let pads = hal::iomuxc::into_pads(iomuxc);
+        let led = port.output(pads.gpio.p11);
+        Some(Resources { led })
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The <code>board</code> implementation also uses the boot header crate, meeting the
+requirements discussed in <a href="ecosystem_walkthrough/./booting.html">booting</a>. Although it's not depicted in
+this example, the <code>Led</code> type and <code>Resources::take()</code> implementation vary for
+each board. And although it's not required for this small BSP, a
+<code>non_exhaustive</code> attribute on <code>Resources</code> requires that users match only the
+board resources they expect, permitting boards to add new resources without
+breaking users.</p>
+<p>A BSP following this design can manage lower-level peripheral instances for the
+user, and present higher-level drivers to the user. Furthermore, it presents an
+interface that may let users port their applications across different boards.
+However, the approach has some limitations.</p>
+<h3 id="limitations-1"><a class="header" href="#limitations-1">Limitations</a></h3>
+<p>As of this writing, the developer is the <code>imxrt-ral</code> resource management
+strategy. Specifically, the developer must ensure that it's safe to acquire
+<code>imxrt-ral</code> peripheral instances in their system. In this BSP example, the
+developer knows that this application is the only software executing on the
+hardware, so it's the sole owner of the <code>imxrt-ral</code> peripheral instances.
+However, it may not be safe to deploy this BSP in systems where multiple (Rust)
+applications concurrently execute and use the same hardware resources. In lieu
+of an integrated resource management strategy, the <code>unsafe</code> instance access is
+the developer's cue to handle these possibilities, or to document assumptions.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="extra-packages"><a class="header" href="#extra-packages">Extra packages</a></h1>
+<p>The imxrt-rs project maintains additional packages to support embedded Rust
+development on i.MX RT processors. This page lists some of those extra packages.
+For the complete list of packages, check out <a href="https://github.com/imxrt-rs">our GitHub
+organization</a>.</p>
+<h2 id="imxrt-iomuxc"><a class="header" href="#imxrt-iomuxc">imxrt-iomuxc</a></h2>
+<p><a href="https://github.com/imxrt-rs/imxrt-iomuxc"><code>imxrt-iomuxc</code></a> provides an alternate
+IOMUXC API than what's provided by <code>imxrt-ral</code>. This package</p>
+<ul>
+<li>provides a pad configuration API.</li>
+<li>defines processor pads.</li>
+<li>specifies the peripheral functions supported by each pad.</li>
+</ul>
+<p><code>imxrt-hal</code> re-exports and extends this API; if you're using <code>imxrt-hal</code>, you
+already depend on this package. However, there are <a href="ecosystem_walkthrough/./bsp.html#renaming-pads">some
+reasons</a> to use <code>imxrt-iomuxc</code> as your direct
+dependency.</p>
+<h2 id="imxrt-usbd"><a class="header" href="#imxrt-usbd">imxrt-usbd</a></h2>
+<p><a href="https://github.com/imxrt-rs/imxrt-usbd"><code>imxrt-usbd</code></a> implements a high-speed
+USB bus. The driver is compatible with the
+<a href="https://crates.io/crates/usb-device"><code>usb-device</code></a> ecosystem. <code>imxrt-hal</code>
+re-exports and extends the API, but you may use the package directly.</p>
+<h2 id="imxrt-log"><a class="header" href="#imxrt-log">imxrt-log</a></h2>
+<p><a href="https://github.com/imxrt-rs/imxrt-hal"><code>imxrt-log</code></a> builds on <code>imxrt-hal</code> to
+provide convenient developer logging. <code>imxrt-log</code> works with the
+<a href="https://crates.io/crates/log"><code>log</code></a> and
+<a href="https://crates.io/crates/defmt"><code>defmt</code></a> logging frameworks. Transports include
+USB serial and LPUART.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="toolchain-setup"><a class="header" href="#toolchain-setup">Toolchain setup</a></h1>
+<p>In order to build Rust applications for i.MX RT MCUs, you'll need a Rust
+toolchain and target that supports the MCU. This brief setup guide shows how to
+install a compatible Rust target for the i.MX RT.</p>
+<p><a href="https://rustup.rs"><code>rustup</code></a> is an official Rust project that simplifies
+toolchain setup and maintenance. This setup guide assumes that you're using
+<code>rustup</code> to manage your existing Rust toolchain.</p>
+<p>Releases of most imxrt-rs packages target the latest, stable Rust release. Make
+sure that you have the latest, stable Rust release by updating your toolchain:</p>
+<pre><code class="language-bash">rustup update stable
+</code></pre>
+<p>Then, use <code>rustup</code> to install the <code>thumbv7em-none-eabihf</code> target:</p>
+<pre><code class="language-bash">rustup target add thumbv7em-none-eabihf
+</code></pre>
+<p>Since the CPU supports double-precision floating point operations, most imxrt-rs
+documentation assumes the hard-float target. Consider installing and using the
+hard-float target if you want to precisely follow imxrt-rs documentation. You're
+otherwise free to substitute your preferred, equivalent target.</p>
+<p>Once the target is installed, supply it to compatible Cargo commands with
+<code>--target</code>.</p>
+<pre><code class="language-bash">cargo build --target=thumbv7em-none-eabihf
+</code></pre>
+<p>Alternatively, use <a href="https://doc.rust-lang.org/cargo/reference/config.html">a Cargo
+configuration</a> to set
+<code>thumbv7em-none-eabihf</code> as the default target. The snippet below shows an
+example of the configuration.</p>
+<pre><code class="language-toml">[build]
+target = &quot;thumbv7em-none-eabihf&quot;
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="flashing-and-debugging"><a class="header" href="#flashing-and-debugging">Flashing and debugging</a></h1>
+<p>Once you've developed an embedded Rust application for your i.MX RT target,
+you'll need additional tools to flash and debug your target. This page links to
+tools that can flash and debug i.MX RT targets. It also describes tips for
+integrating flashing and debugging tools in your Rust project.</p>
+<p>In order to flash and debug an i.MX RT target, you'll need a physical debug
+probe that</p>
+<ul>
+<li>is compatible with your chosen flashing and debugging software.</li>
+<li>works with your hardware.</li>
+</ul>
+<p>Consult each software tool's documentation to understand its support for your
+debug probe.</p>
+<h2 id="pyocd"><a class="header" href="#pyocd">pyOCD</a></h2>
+<p><a href="https://pyocd.io">pyOCD</a> is a Python toolkit for debugging and programming Arm
+microcontrollers. It includes support for debugging i.MX RT 10xx and 11xx
+processors. It can also program external NOR flash chips, making it suitable for
+persistent device programming.</p>
+<p>You can use pyOCD as a Cargo runner. For more information, see the <a href="flash_debug.html#tips">Tips</a>
+section.</p>
+<h2 id="probe-rs"><a class="header" href="#probe-rs">probe-rs</a></h2>
+<p><a href="https://probe.rs">probe-rs</a> develops embedded debugging tools in Rust. All
+tools that build on probe-rs, including</p>
+<ul>
+<li><a href="https://github.com/probe-rs/cargo-flash"><code>cargo-flash</code></a></li>
+<li><a href="https://github.com/probe-rs/cargo-embed"><code>cargo-embed</code></a></li>
+<li><a href="https://github.com/knurling-rs/probe-run"><code>probe-run</code></a></li>
+</ul>
+<p>should support i.MX RT 10xx and 11xx processors. probe-rs can write your binary
+to external NOR flash chips, just like pyOCD. Consult each tool's documentation
+for installation and usage.</p>
+<blockquote>
+<p>ℹ️ i.MX RT support in probe-rs is in its early stages. Patches for i.MX RT
+processors may not yet be accepted or released. If that's the case, consider
+building tools from source.</p>
+</blockquote>
+<h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
+<p>These tips may be helpful for integrating flashing and debugging tools in your
+workflow. They may work for flashing and debugging tools that are not covered by
+this guide.</p>
+<h3 id="use-a-cargo-runner"><a class="header" href="#use-a-cargo-runner">Use a Cargo runner</a></h3>
+<p>A runner describes the behavior of <code>cargo run</code> and other <code>cargo</code> commands. You
+can use a Cargo runner to invoke your flashing and debugging tool. See <a href="https://doc.rust-lang.org/cargo/reference/config.html">the
+Configuration chapter</a> of
+The Cargo Book for more information.</p>
+<p>Here's an example of a runner that uses <code>pyocd</code> to program a i.MX RT 1010
+microcontroller. This assumes that you have <code>pyocd</code> installed. Once this
+configuration is specified in your project,
+<code>cargo run --target=thumbv7em-none-eabihf</code> will invoke <code>pyocd</code> to flash your
+target.</p>
+<pre><code class="language-toml">[target.thumbv7em-none-eabihf]
+runner = [
+    &quot;pyocd&quot;, &quot;load&quot;,
+    &quot;--target=mimxrt1010&quot;,
+    &quot;--format=elf&quot;,
+]
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="external-documentation"><a class="header" href="#external-documentation">External documentation</a></h1>
+<p>This page links to external documentation that might help you understand i.MX RT
+processors. It also links to embedded Rust documentation, which you should study
+if you're new to embedded Rust development.</p>
+<h2 id="datasheets"><a class="header" href="#datasheets">Datasheets</a></h2>
+<p>i.MX RT data sheets are available as free downloads
+<a href="https://www.nxp.com/products/processors-and-microcontrollers/arm-microcontrollers/i-mx-rt-crossover-mcus:IMX-RT-SERIES">here</a>.
+The data sheets are useful for understanding high-level capabilities of i.MX RT
+processors. Select your processor, then go to &quot;Documentation,&quot; then &quot;Data
+Sheet.&quot;</p>
+<h2 id="reference-manuals"><a class="header" href="#reference-manuals">Reference manuals</a></h2>
+<p>i.MX RT reference manuals are available from NXP. The reference manuals describe
+the i.MX RT registers and peripheral capabilities, and they're the source of
+truth for most driver development.</p>
+<p>To download a reference manual, go
+<a href="https://www.nxp.com/products/processors-and-microcontrollers/arm-microcontrollers/i-mx-rt-crossover-mcus:IMX-RT-SERIES">here</a>
+and select your processor. Then, go to &quot;Documentation,&quot; and scroll down to
+&quot;Reference Manual.&quot; You'll need a free NXP account to access the reference
+manuals.</p>
+<h2 id="application-notes"><a class="header" href="#application-notes">Application notes</a></h2>
+<p>There's many application notes (AN) for i.MX RT processors. They're available
+through the same documentation portal that serves datasheets and reference
+manuals.</p>
+<p>Some ANs of interest are listed below.</p>
+<ul>
+<li><a href="https://www.nxp.com/docs/en/application-note/AN12077.pdf">AN12077: Using the i.MX RT
+FlexRAM</a> talks
+about how to configure tightly-coupled memory (TCM). It's useful information
+for understanding <code>imxrt-rt</code>.</li>
+<li><a href="https://www.nxp.com/docs/en/nxp/application-notes/AN12238.pdf">AN12238: i.MX RT Flashloader Use
+Case</a> is
+helpful for understanding the i.MX RT boot image. It's also useful for
+understanding <code>imxrt-rt</code>.</li>
+<li><a href="https://www.nxp.com/docs/en/application-note/AN13264.pdf">AN13264: i.MX RT1170 Dual Core
+Application</a>
+summarizes the boot process for the second core on an 11xx processor.</li>
+<li><a href="https://www.nxp.com/docs/en/application-note/AN13148.pdf">AN13148: i.MX RT1170 Low-Power
+Modes</a> and
+<a href="https://www.nxp.com/docs/en/application-note/AN13104.pdf">AN13104: Debug and Application for i.MX RT1170 Clock and Low Power
+Feature</a> describe
+the complexities of 11xx clock and power management.</li>
+</ul>
+<h2 id="embedded-rust"><a class="header" href="#embedded-rust">Embedded Rust</a></h2>
+<p>If you're brand new to embedded Rust, read through <a href="https://docs.rust-embedded.org/book/intro/index.html">The Embedded Rust
+Book</a>. This will help you
+understand some of the concepts that appear throughout imxrt-rs packages. Once
+you've read through the book, also check out the resources listed on the front
+page.</p>
+<h2 id="software-references"><a class="header" href="#software-references">Software references</a></h2>
+<p>If you're looking for external code references, check out</p>
+<ul>
+<li>the <a href="https://www.zephyrproject.org/">Zephyr Project</a>.</li>
+<li>the ARM CMSIS Packs. Here's the <a href="https://developer.arm.com/embedded/cmsis/cmsis-packs/devices/NXP/MIMXRT1062XXXXA">MIMXRT1062
+pack</a>;
+NXP and ARM also provide CMSIS packs for the other i.MX RT variants.</li>
+<li>NXP's MCUXpresso SDK, available
+<a href="https://www.nxp.com/design/software/development-software/mcuxpresso-software-and-tools/mcuxpresso-software-development-kit-sdk:MCUXpresso-SDK">here</a>.</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            </nav>
+
+        </div>
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+    </body>
+</html>
