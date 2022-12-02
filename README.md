@@ -9,10 +9,11 @@ information on a topic. We also welcome pull requests to improve the book.
 The documentation uses [mdBook](https://rust-lang.github.io/mdBook/) as an
 authoring and publishing tool. Use `mdbook` to locally generate the book.
 
-Code samples are tested with `cargo`. Follow the documentation to install a
-toolchain and target support. Then, individually build the packages within the
-workspace. See the [CI job definition](.github/workflows/ci.yml) for a
-demonstration.
+Code samples are tested with `cargo` and should run on all boards described in
+the walkthrough. Follow the documentation to install a toolchain and target
+support. Then, individually build the packages within the workspace. Or, use the
+[`build_examples.sh` script](./scripts/build_examples.sh) to automatically build
+*all* examples.
 
 ## License
 

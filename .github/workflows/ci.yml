@@ -13,19 +13,8 @@ jobs:
       run: rustup toolchain install stable --profile=minimal --target=thumbv7em-none-eabihf && rustup component add rustfmt
     - name: Check Rust formatting
       run: cargo fmt --all -- --check
-    - name: Build 'boot' ecosystem walkthrough code
-      run: cargo build --target=thumbv7em-none-eabihf --package=ew_boot
-    - name: Build 'RAL' ecosystem walkthrough code
-      run: cargo build --target=thumbv7em-none-eabihf --package=ew_ral
-    - name: Build 'HAL' ecosystem walkthrough code
-      run: cargo build --target=thumbv7em-none-eabihf --package=ew_hal
-
-    - name: Build 'BSP' ecosystem walkthrough code for an i.MXRT1010evk
-      run: cargo build --target=thumbv7em-none-eabihf --package=ew_bsp --features=imxrt1010evk
-    - name: Build 'BSP' ecosystem walkthrough code for a Teensy 4
-      run: cargo build --target=thumbv7em-none-eabihf --package=ew_bsp --features=teensy4
-    - name: Build 'BSP' ecosystem walkthrough code for an i.MXRT1170EVK
-      run: cargo build --target=thumbv7em-none-eabihf --package=ew_bsp --features=imxrt1170evk-cm7
+    - name: Build all ecosystem walkthrough examples
+      run: ./scripts/build_examples.sh
 
   book:
     runs-on: ubuntu-latest
