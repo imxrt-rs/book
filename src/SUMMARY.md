@@ -9,5 +9,7 @@
     -   [Board support package](./ecosystem_walkthrough/bsp.md)
     -   [Extra packages](./ecosystem_walkthrough/extras.md)
 -   [Toolchain setup](./toolchain.md)
--   [Flashing and debugging](./flash_debug.md)
+-   [Flashing and debugging](./flash_debug/README.md)
+    -   [Recovering an EVK](./flash_debug/evk_recovery.md)
+    -   [pyOCD quick-start guide](./flash_debug/pyocd_qsg.md)
 -   [External documentation](./external_docs.md)

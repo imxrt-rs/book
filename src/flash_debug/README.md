@@ -14,6 +14,20 @@ probe that
 Consult each software tool's documentation to understand its support for your
 debug probe.
 
+## Recommendations for i.MX RT EVKs
+
+When working with NXP's i.MX RT EVKs, we recommend either [pyOCD](#pyocd) or a
+[probe-rs](#probe-rs)-based tool. Both of these tools can flash and debug the
+i.MX RT processor through the OpenSDA probe available on the board. This
+approach doesn't require an external JTAG / SWD debug probe.
+
+Connect to the OpenSDA probe using a USB cable, and ensure that the board's
+jumpers are configured to use the OpenSDA probe. Consult your board's
+documentation for the specific USB port and jumper configurations.
+
+If you've flashed a bad program to your EVK and you're having trouble
+reprogramming the board, see [recovering an EVK](./evk_recovery.md).
+
 ## pyOCD
 
 [pyOCD](https://pyocd.io) is a Python toolkit for debugging and programming Arm
@@ -21,8 +35,11 @@ microcontrollers. It includes support for debugging i.MX RT 10xx and 11xx
 processors. It can also program external NOR flash chips, making it suitable for
 persistent device programming.
 
-You can use pyOCD as a Cargo runner. For more information, see the [Tips](#tips)
-section.
+See [our quick-start guide](./pyocd_qsg.md) if you're interested in using pyOCD
+as a flashing and debugging tool.
+
+You can also use pyOCD as a Cargo runner. For more information, see the
+[Tips](#tips) section.
 
 ## probe-rs
 

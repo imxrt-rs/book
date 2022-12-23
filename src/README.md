@@ -12,7 +12,7 @@ combine imxrt-rs packages to support your embedded Rust development.
 
 If you're using an imxrt-rs package, consult the [toolchain
 setup](./toolchain.md) to prepare your development environment. Our recommended
-[flashing and debugging tools](./flash_debug.md) can help you deploy your
+[flashing and debugging tools](./flash_debug/) can help you deploy your
 application on your hardware.
 
 For links to helpful references, check out our [external documentation
