@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/index.html"><strong aria-hidden="true">1.</strong> Ecosystem walkthrough</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ecosystem_walkthrough/booting.html"><strong aria-hidden="true">1.1.</strong> Booting</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/ral.html"><strong aria-hidden="true">1.2.</strong> Register access layer</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/hal.html"><strong aria-hidden="true">1.3.</strong> Hardware abstraction layer</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/bsp.html"><strong aria-hidden="true">1.4.</strong> Board support package</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/extras.html"><strong aria-hidden="true">1.5.</strong> Extra packages</a></li></ol></li><li class="chapter-item expanded "><a href="toolchain.html"><strong aria-hidden="true">2.</strong> Toolchain setup</a></li><li class="chapter-item expanded "><a href="flash_debug.html"><strong aria-hidden="true">3.</strong> Flashing and debugging</a></li><li class="chapter-item expanded "><a href="external_docs.html"><strong aria-hidden="true">4.</strong> External documentation</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/index.html"><strong aria-hidden="true">1.</strong> Ecosystem walkthrough</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ecosystem_walkthrough/booting.html"><strong aria-hidden="true">1.1.</strong> Booting</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/ral.html"><strong aria-hidden="true">1.2.</strong> Register access layer</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/hal.html"><strong aria-hidden="true">1.3.</strong> Hardware abstraction layer</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/bsp.html"><strong aria-hidden="true">1.4.</strong> Board support package</a></li><li class="chapter-item expanded "><a href="ecosystem_walkthrough/extras.html"><strong aria-hidden="true">1.5.</strong> Extra packages</a></li></ol></li><li class="chapter-item expanded "><a href="toolchain.html"><strong aria-hidden="true">2.</strong> Toolchain setup</a></li><li class="chapter-item expanded "><a href="flash_debug/index.html"><strong aria-hidden="true">3.</strong> Flashing and debugging</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="flash_debug/evk_recovery.html"><strong aria-hidden="true">3.1.</strong> Recovering an EVK</a></li><li class="chapter-item expanded "><a href="flash_debug/pyocd_qsg.html"><strong aria-hidden="true">3.2.</strong> pyOCD quick-start guide</a></li></ol></li><li class="chapter-item expanded "><a href="external_docs.html"><strong aria-hidden="true">4.</strong> External documentation</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -148,7 +148,7 @@ walkthrough</a>. The walkthrough demonstrates how you can
 combine imxrt-rs packages to support your embedded Rust development.</p>
 <p>If you're using an imxrt-rs package, consult the <a href="./toolchain.html">toolchain
 setup</a> to prepare your development environment. Our recommended
-<a href="./flash_debug.html">flashing and debugging tools</a> can help you deploy your
+<a href="./flash_debug/">flashing and debugging tools</a> can help you deploy your
 application on your hardware.</p>
 <p>For links to helpful references, check out our <a href="./external_docs.html">external documentation
 sources</a>.</p>
@@ -830,13 +830,25 @@ probe that</p>
 </ul>
 <p>Consult each software tool's documentation to understand its support for your
 debug probe.</p>
+<h2 id="recommendations-for-imx-rt-evks"><a class="header" href="#recommendations-for-imx-rt-evks">Recommendations for i.MX RT EVKs</a></h2>
+<p>When working with NXP's i.MX RT EVKs, we recommend either <a href="flash_debug/index.html#pyocd">pyOCD</a> or a
+<a href="flash_debug/index.html#probe-rs">probe-rs</a>-based tool. Both of these tools can flash and debug the
+i.MX RT processor through the OpenSDA probe available on the board. This
+approach doesn't require an external JTAG / SWD debug probe.</p>
+<p>Connect to the OpenSDA probe using a USB cable, and ensure that the board's
+jumpers are configured to use the OpenSDA probe. Consult your board's
+documentation for the specific USB port and jumper configurations.</p>
+<p>If you've flashed a bad program to your EVK and you're having trouble
+reprogramming the board, see <a href="flash_debug/./evk_recovery.html">recovering an EVK</a>.</p>
 <h2 id="pyocd"><a class="header" href="#pyocd">pyOCD</a></h2>
 <p><a href="https://pyocd.io">pyOCD</a> is a Python toolkit for debugging and programming Arm
 microcontrollers. It includes support for debugging i.MX RT 10xx and 11xx
 processors. It can also program external NOR flash chips, making it suitable for
 persistent device programming.</p>
-<p>You can use pyOCD as a Cargo runner. For more information, see the <a href="flash_debug.html#tips">Tips</a>
-section.</p>
+<p>See <a href="flash_debug/./pyocd_qsg.html">our quick-start guide</a> if you're interested in using pyOCD
+as a flashing and debugging tool.</p>
+<p>You can also use pyOCD as a Cargo runner. For more information, see the
+<a href="flash_debug/index.html#tips">Tips</a> section.</p>
 <h2 id="probe-rs"><a class="header" href="#probe-rs">probe-rs</a></h2>
 <p><a href="https://probe.rs">probe-rs</a> develops embedded debugging tools in Rust. All
 tools that build on probe-rs, including</p>
@@ -874,6 +886,81 @@ runner = [
     &quot;--format=elf&quot;,
 ]
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="recovering-an-evk"><a class="header" href="#recovering-an-evk">Recovering an EVK</a></h1>
+<p>Sometimes, your debug probe fails to connect to the i.MX RT processor on your
+NXP EVK. Simple troubleshooting approaches, like resetting power, cannot resolve
+the issue. As a result, you're unable to flash a known, good program to recover
+the board.</p>
+<p>If you're experiencing this problem, try these steps to recover your board. This
+guide assumes</p>
+<ul>
+<li>you're using a NXP EVK, or equivalent hardware, that has switches to control
+the processor boot order.</li>
+<li>your processor typically executes out of on-board flash.</li>
+<li>you have a known, good program to load onto your board's flash.</li>
+</ul>
+<h2 id="recovery-steps"><a class="header" href="#recovery-steps">Recovery steps</a></h2>
+<ol>
+<li>Power off your board.</li>
+<li>Locate the boot mode switches on your board. Consult your board's
+documentation for the switch locations.</li>
+<li>Use the switches to change the boot mode to &quot;serial downloader.&quot; Consult
+your board's documentation to understand possible boot mode configurations.</li>
+<li>Power on your board. Observe that the program stored in the board's flash is
+not executing.</li>
+<li>Use your normal process to flash a known, good program. This step should now
+succeed.</li>
+<li>Power off your board.</li>
+<li>Revert the boot mode switches back to their previous configuration.</li>
+<li>Power on your board. Observe that the known, good program executes from
+flash.</li>
+</ol>
+<p>After flashing the known, good program, you should be able to reprogram the
+board without changing the boot mode.</p>
+<h2 id="discussion"><a class="header" href="#discussion">Discussion</a></h2>
+<p>By changing the boot mode to &quot;serial downloader,&quot; we use the serial bootloader,
+stored in the processor's boot ROM, as an ephemeral, known, good program. Your
+probe should have better luck connecting to the processor when the processor is
+simply waiting for commands over LPUART / USB.</p>
+<p>If these steps are not sufficient to recover your board, your hardware may be in
+a more troublesome state. Refer to your board's documentation for additional
+troubleshooting steps.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pyocd-quick-start-guide"><a class="header" href="#pyocd-quick-start-guide">pyOCD quick-start guide</a></h1>
+<blockquote>
+<p>This guide was developed against pyOCD 0.34. For the most up-to-date
+information, study the pyOCD documentation.</p>
+</blockquote>
+<p>Check out the pyOCD documentation for installation methods. Once installed, list
+all supported targets, and filter for the i.MX RT targets.</p>
+<pre><code>pyocd list --targets | grep -i imxrt
+</code></pre>
+<p>The left-most column has a list of i.MX RT targets. Select the one that most
+closely matches your processor. We'll call this <code>$TARGET</code> in the rest of this
+section.</p>
+<blockquote>
+<p>Note that pyOCD identifies processors by their chip families, not part
+numbers. You should select the target by the chip family. For example, use the
+<strong>1060</strong> pyOCD target if your chip is numbered <strong>1062</strong>.</p>
+</blockquote>
+<p>Connect your hardware to your development host. To <strong>reset</strong> the processor, use
+the <code>reset</code> command. To make it more obvious that a reset succeeded, consider
+using <code>--halt</code> to stop the processor after the reset.</p>
+<pre><code>pyocd reset --target=$TARGET --halt
+</code></pre>
+<p>To <strong>load / flash</strong> a (ELF) program that's built for your target, use the <code>load</code>
+command.</p>
+<pre><code>pyocd load --target=$TARGET --format=elf [path/to/your/program]
+</code></pre>
+<p>Cargo generates ELF files by default, so you should prefer the ELF format in
+most cases. However, you can change the <code>--format</code> argument if your executable
+is in a different format.</p>
+<p>To <strong>debug</strong> your program, use pyOCD as a GDB server.</p>
+<pre><code>pyocd gdbserver --target=$TARGET
+</code></pre>
+<p>Then, connect to the GDB server with your tool of choice. See <a href="https://pyocd.io/docs/gdb_setup.html">GDB
+setup</a> for more information. Note that
+you'll need a minimally-optimized Rust program in order to have an effective
+debug session.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="external-documentation"><a class="header" href="#external-documentation">External documentation</a></h1>
 <p>This page links to external documentation that might help you understand i.MX RT
 processors. It also links to embedded Rust documentation, which you should study
