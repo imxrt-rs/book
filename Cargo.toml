@@ -7,6 +7,7 @@ members = [
 ]
 
 [patch.crates-io]
+imxrt-dma     = { git = "https://github.com/mciantyre/imxrt-dma" }
 imxrt-hal     = { git = "https://github.com/mciantyre/imxrt-hal" }
 imxrt-ral     = { git = "https://github.com/mciantyre/imxrt-ral" }
 ral-registers = { git = "https://github.com/mciantyre/ral-registers" }
