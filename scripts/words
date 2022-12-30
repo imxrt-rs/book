@@ -10,6 +10,7 @@ APIs
 BSP
 BSPs
 CMSIS
+DMA
 Datasheets
 EVK
 EVKs
@@ -41,10 +42,12 @@ SWD
 TCM
 Teensy
 Toolchain
+async
 bootloader
 bsp
 datasheets
 defmt
+dma
 doesn
 downloader
 eabihf
