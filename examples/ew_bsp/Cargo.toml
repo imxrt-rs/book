@@ -6,7 +6,7 @@ edition = "2021"
 # Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = "0.5.0-alpha" }
+imxrt-hal = { version = "0.5" }
 imxrt-ral = { version = "0.5", features = ["rt"] }
 imxrt-rt = { version = "0.1", features = ["device"] }
 

@@ -8,7 +8,7 @@ publish = false
 # Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = "0.5.0-alpha", features = ["imxrt1010"] }
+imxrt-hal = { version = "0.5", features = ["imxrt1010"] }
 
 # As before...
 imxrt-ral = { version = "0.5", features = ["imxrt1011", "rt"] }
