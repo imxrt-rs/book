@@ -1,8 +1,6 @@
 # imxrt-rs
 
-This book includes documentation that pertains to most imxrt-rs development.
-It's for users who want to learn more about imxrt-rs Rust packages, and for
-users who want to use imxrt-rs packages in their projects.
+User and developer documentation for the imxrt-rs project.
 
 ## Getting started
 
@@ -17,6 +15,11 @@ application on your hardware.
 
 For links to helpful references, check out our [external documentation
 sources](./external_docs.md).
+
+If you're already familiar with embedded Rust and want to dive in, the best
+place to start is in [the `imxrt-hal`
+repository](https://github.com/imxrt-rs/imxrt-hal). You'll find small hardware
+examples that run on various development boards.
 
 ### About
 
