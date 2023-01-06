@@ -139,9 +139,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="imxrt-rs"><a class="header" href="#imxrt-rs">imxrt-rs</a></h1>
-<p>This book includes documentation that pertains to most imxrt-rs development.
-It's for users who want to learn more about imxrt-rs Rust packages, and for
-users who want to use imxrt-rs packages in their projects.</p>
+<p>User and developer documentation for the imxrt-rs project.</p>
 <h2 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h2>
 <p>If you're not familiar with our work, take a look at the <a href="./ecosystem_walkthrough/">ecosystem
 walkthrough</a>. The walkthrough demonstrates how you can
@@ -152,6 +150,10 @@ setup</a> to prepare your development environment. Our recommended
 application on your hardware.</p>
 <p>For links to helpful references, check out our <a href="./external_docs.html">external documentation
 sources</a>.</p>
+<p>If you're already familiar with embedded Rust and want to dive in, the best
+place to start is in <a href="https://github.com/imxrt-rs/imxrt-hal">the <code>imxrt-hal</code>
+repository</a>. You'll find small hardware
+examples that run on various development boards.</p>
 <h3 id="about"><a class="header" href="#about">About</a></h3>
 <p>We provide community support for using Rust on NXP's i.MX RT processors. We
 develop hardware drivers with
@@ -423,7 +425,7 @@ project. Unlike the <a href="ecosystem_walkthrough/./ral.html">previous example<
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = &quot;0.5.0-alpha&quot;, features = [&quot;imxrt1010&quot;] }
+imxrt-hal = { version = &quot;0.5&quot;, features = [&quot;imxrt1010&quot;] }
 
 # As before...
 imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
@@ -575,7 +577,7 @@ boot header ensures that the runtime can boot the board's processor.</p>
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = &quot;0.5.0-alpha&quot; }
+imxrt-hal = { version = &quot;0.5&quot; }
 imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;rt&quot;] }
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
 
@@ -788,6 +790,11 @@ provide convenient developer logging. <code>imxrt-log</code> works with the
 <a href="https://crates.io/crates/log"><code>log</code></a> and
 <a href="https://crates.io/crates/defmt"><code>defmt</code></a> logging frameworks. Transports include
 USB serial and LPUART.</p>
+<h2 id="imxrt-dma"><a class="header" href="#imxrt-dma">imxrt-dma</a></h2>
+<p><a href="https://github.com/imxrt-rs/imxrt-dma"><code>imxrt-dma</code></a> provides a DMA driver for
+supported i.MX RT processors. Use it to schedule DMA transfers, and to await DMA
+transfers in <code>async</code> code. <code>imxrt-hal</code> configures a DMA driver and re-exports
+most of the API.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="toolchain-setup"><a class="header" href="#toolchain-setup">Toolchain setup</a></h1>
 <p>In order to build Rust applications for i.MX RT MCUs, you'll need a Rust
 toolchain and target that supports the MCU. This brief setup guide shows how to

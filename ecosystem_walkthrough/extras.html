@@ -165,6 +165,11 @@ provide convenient developer logging. <code>imxrt-log</code> works with the
 <a href="https://crates.io/crates/log"><code>log</code></a> and
 <a href="https://crates.io/crates/defmt"><code>defmt</code></a> logging frameworks. Transports include
 USB serial and LPUART.</p>
+<h2 id="imxrt-dma"><a class="header" href="#imxrt-dma">imxrt-dma</a></h2>
+<p><a href="https://github.com/imxrt-rs/imxrt-dma"><code>imxrt-dma</code></a> provides a DMA driver for
+supported i.MX RT processors. Use it to schedule DMA transfers, and to await DMA
+transfers in <code>async</code> code. <code>imxrt-hal</code> configures a DMA driver and re-exports
+most of the API.</p>
 
                     </main>
 
