@@ -3,6 +3,8 @@ name: Check and publish the book
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   examples:
