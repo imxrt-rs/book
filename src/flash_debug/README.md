@@ -44,19 +44,12 @@ You can also use pyOCD as a Cargo runner. For more information, see the
 ## probe-rs
 
 [probe-rs](https://probe.rs) develops embedded debugging tools in Rust. All
-tools that build on probe-rs, including
+tools that build on probe-rs should support i.MX RT 10xx and 11xx processors.
+probe-rs can write your binary to external NOR flash chips, just like pyOCD.
+Consult probe-rs documentation for tool installation and usage.
 
--   [`cargo-flash`](https://github.com/probe-rs/cargo-flash)
--   [`cargo-embed`](https://github.com/probe-rs/cargo-embed)
--   [`probe-run`](https://github.com/knurling-rs/probe-run)
-
-should support i.MX RT 10xx and 11xx processors. probe-rs can write your binary
-to external NOR flash chips, just like pyOCD. Consult each tool's documentation
-for installation and usage.
-
-> ℹ️ i.MX RT support in probe-rs is in its early stages. Patches for i.MX RT
-> processors may not yet be accepted or released. If that's the case, consider
-> building tools from source.
+> ℹ️ Patches for i.MX RT targets may not yet be accepted or released. If that's
+> the case, consider building tools from source.
 
 ## Tips
 
