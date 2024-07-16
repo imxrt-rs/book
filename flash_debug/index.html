@@ -171,19 +171,12 @@ as a flashing and debugging tool.</p>
 <a href="#tips">Tips</a> section.</p>
 <h2 id="probe-rs"><a class="header" href="#probe-rs">probe-rs</a></h2>
 <p><a href="https://probe.rs">probe-rs</a> develops embedded debugging tools in Rust. All
-tools that build on probe-rs, including</p>
-<ul>
-<li><a href="https://github.com/probe-rs/cargo-flash"><code>cargo-flash</code></a></li>
-<li><a href="https://github.com/probe-rs/cargo-embed"><code>cargo-embed</code></a></li>
-<li><a href="https://github.com/knurling-rs/probe-run"><code>probe-run</code></a></li>
-</ul>
-<p>should support i.MX RT 10xx and 11xx processors. probe-rs can write your binary
-to external NOR flash chips, just like pyOCD. Consult each tool's documentation
-for installation and usage.</p>
+tools that build on probe-rs should support i.MX RT 10xx and 11xx processors.
+probe-rs can write your binary to external NOR flash chips, just like pyOCD.
+Consult probe-rs documentation for tool installation and usage.</p>
 <blockquote>
-<p>ℹ️ i.MX RT support in probe-rs is in its early stages. Patches for i.MX RT
-processors may not yet be accepted or released. If that's the case, consider
-building tools from source.</p>
+<p>ℹ️ Patches for i.MX RT targets may not yet be accepted or released. If that's
+the case, consider building tools from source.</p>
 </blockquote>
 <h2 id="tips"><a class="header" href="#tips">Tips</a></h2>
 <p>These tips may be helpful for integrating flashing and debugging tools in your
