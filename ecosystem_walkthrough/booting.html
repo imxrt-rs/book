@@ -240,13 +240,9 @@ provides a FlexSPI configuration block (FCB). On the other hand, systems that
 use parallel NAND flash may need a different kind of boot header. Consult your
 processor's reference manual for more information about boot headers.</p>
 <p>As an user of these crates, you simply need to include the proper boot header
-for your system. imxrt-rs maintains FCBs for various development boards,
-including</p>
-<ul>
-<li>the i.MXRT1010EVK</li>
-<li>the i.MXRT1170EVK</li>
-</ul>
-<p>These FCBs are developed alongside the <a href="https://github.com/imxrt-rs/imxrt-boot-gen"><code>imxrt-boot-gen</code>
+for your system. imxrt-rs maintains FCBs for various development boards; they're
+listed <a href="https://github.com/imxrt-rs/imxrt-boot-gen/tree/master/fcbs">here</a>.
+These FCBs are developed alongside the <a href="https://github.com/imxrt-rs/imxrt-boot-gen"><code>imxrt-boot-gen</code>
 package</a>. If no boot header exists
 for your system, use <code>imxrt-boot-gen</code> to define your system's boot header.</p>
 <p>Other boot headers, like the
