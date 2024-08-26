@@ -57,12 +57,8 @@ use parallel NAND flash may need a different kind of boot header. Consult your
 processor's reference manual for more information about boot headers.
 
 As an user of these crates, you simply need to include the proper boot header
-for your system. imxrt-rs maintains FCBs for various development boards,
-including
-
--   the i.MXRT1010EVK
--   the i.MXRT1170EVK
-
+for your system. imxrt-rs maintains FCBs for various development boards; they're
+listed [here](https://github.com/imxrt-rs/imxrt-boot-gen/tree/master/fcbs).
 These FCBs are developed alongside the [`imxrt-boot-gen`
 package](https://github.com/imxrt-rs/imxrt-boot-gen). If no boot header exists
 for your system, use `imxrt-boot-gen` to define your system's boot header.

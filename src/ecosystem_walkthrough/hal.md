@@ -28,11 +28,8 @@ project. Unlike the [previous example](./ral.md), this new example use
 ## Try the HAL
 
 The `imxrt-hal` repository includes a collection of hardware examples that work
-on various boards, including the
-
--   Teensy 4 (both 4.0 and 4.1).
--   NXP's i.MXRT1010EVK.
--   Cortex-M7 of NXP's i.MXRT1170EVK.
+on [various boards](https://github.com/imxrt-rs/imxrt-hal/tree/main/board)
+listed in the repository.
 
 You can use these examples to try the HAL on your hardware. See [the repository
 documentation](https://github.com/imxrt-rs/imxrt-hal) for more information.
