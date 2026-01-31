@@ -48,6 +48,11 @@ Some ANs of interest are listed below.
     [AN13104: Debug and Application for i.MX RT1170 Clock and Low Power
     Feature](https://www.nxp.com/docs/en/application-note/AN13104.pdf) describe
     the complexities of 11xx clock and power management.
+-   [AN13206: Modifying Debug Firmware][an13206] shows how to change the debug
+    probe's firmware on 10xx EVKs. Despite the title, it also applies to 11xx
+    EVKs. You'll need your board's schematic handy to find the correct jumper.
+
+[an13206]: https://www.nxp.com/docs/en/application-note/AN13206.pdf
 
 ## Embedded Rust
 
