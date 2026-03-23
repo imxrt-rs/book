@@ -40,3 +40,11 @@ USB serial and LPUART.
 supported i.MX RT processors. Use it to schedule DMA transfers, and to await DMA
 transfers in `async` code. `imxrt-hal` configures a DMA driver and re-exports
 most of the API.
+
+## imxrt-enet
+
+[`imxrt-enet`](https://github.com/imxrt-rs/imxrt-enet) implements an Ethernet
+driver, available on many i.MX RT MCUs. It pairs with [smoltcp], which provides
+the network stack.
+
+[smoltcp]: https://docs.rs/smoltcp/latest/smoltcp/
