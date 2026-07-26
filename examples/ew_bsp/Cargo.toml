@@ -1,20 +1,20 @@
 [package]
 name = "ew_bsp"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 
 # Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = "0.5" }
-imxrt-ral = { version = "0.5", features = ["rt"] }
+imxrt-hal = { version = "0.6" }
+imxrt-ral = { version = "0.6", features = ["rt"] }
 imxrt-rt = { version = "0.1", features = ["device"] }
 
-teensy4-fcb      = { version = "0.4", optional = true }
-imxrt1010evk-fcb = { version = "0.1", optional = true }
-imxrt1170evk-fcb = { version = "0.1", optional = true }
+teensy4-fcb      = { version = "0.5", optional = true }
+imxrt1010evk-fcb = { version = "0.2", optional = true }
+imxrt1170evk-fcb = { version = "0.2", optional = true }
 
-panic-halt = "0.2"
+panic-halt = "1"
 cfg-if = "1"
 
 [build-dependencies]

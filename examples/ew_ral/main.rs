@@ -5,8 +5,8 @@
 
 use imxrt_ral as ral;
 
-use imxrt1010evk_fcb as _;
 use imxrt_rt::entry;
+use imxrt1010evk_fcb as _;
 use panic_halt as _;
 
 const LED_OFFSET: u32 = 1 << 11;

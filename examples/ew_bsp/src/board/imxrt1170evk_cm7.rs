@@ -1,12 +1,9 @@
 //! board/imxrt1170evk_cm7.rs
 
-use crate::{
-    hal::{self, iomuxc::pads},
-    ral,
-};
+use crate::{hal, ral};
 use imxrt1170evk_fcb as _;
 
-pub type Led = hal::gpio::Output<pads::gpio_ad::GPIO_AD_04>;
+pub type Led = hal::gpio::Output;
 
 #[non_exhaustive]
 pub struct Resources {
@@ -23,7 +20,9 @@ impl Resources {
 
         let mut port = hal::gpio::Port::new(gpio9);
         let pads = hal::iomuxc::into_pads(iomuxc, iomuxc_lpsr);
-        let led = port.output(pads.gpio_ad.p04);
+        // GPIO_AD_04 is reachable from both GPIO3 and GPIO9, so name the
+        // GPIO module that matches this port.
+        let led = port.output::<_, 9>(pads.gpio_ad.p04).unwrap();
         Some(Resources { led })
     }
 }

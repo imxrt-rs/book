@@ -2,18 +2,18 @@
 name = "ew_boot"
 license = "MIT OR Apache-2.0"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 publish = false
 
 # Cargo.toml
 
 [dependencies]
 # The boot header package.
-imxrt1010evk-fcb = "0.1"
+imxrt1010evk-fcb = "0.2"
 # The runtime.
 imxrt-rt = "0.1"
 # The panic handler.
-panic-halt = "0.2"
+panic-halt = "1"
 
 [build-dependencies]
 # The same runtime as above.

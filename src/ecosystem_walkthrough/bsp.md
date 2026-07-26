@@ -119,7 +119,7 @@ Here's the application code. The `board` module conditionally exposes a board's
 
 By convention, all boards define a `Resources` struct, which can be `take`n. The
 object contains a `led` member of type `Led`. The `Led` type is an alias for an
-`imxrt-hal` GPIO output, which wraps a specific processor pin.
+`imxrt-hal` GPIO output; each board binds that output to its own LED pad.
 
 Notice that there is no `unsafe` in this application code. The `board` module,
 and its submodules, make sure that board `Resources` are only taken once. Our
@@ -144,11 +144,10 @@ drivers.
 
 The `board` implementation also uses the boot header crate, meeting the
 requirements discussed in [booting](./booting.md). Although it's not depicted in
-this example, the `Led` type and `Resources::take()` implementation vary for
-each board. And although it's not required for this small BSP, a
-`non_exhaustive` attribute on `Resources` requires that users match only the
-board resources they expect, permitting boards to add new resources without
-breaking users.
+this example, the `Resources::take()` implementation varies for each board. And
+although it's not required for this small BSP, a `non_exhaustive` attribute on
+`Resources` requires that users match only the board resources they expect,
+permitting boards to add new resources without breaking users.
 
 A BSP following this design can manage lower-level peripheral instances for the
 user, and present higher-level drivers to the user. Furthermore, it presents an

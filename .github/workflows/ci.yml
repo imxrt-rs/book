@@ -10,7 +10,7 @@ jobs:
   examples:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - name: Install Rust toolchain
       run: rustup toolchain install stable --profile=minimal --target=thumbv7em-none-eabihf && rustup component add rustfmt
     - name: Check Rust formatting
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: examples
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     # https://rust-lang.github.io/mdBook/continuous-integration.html
     - name: Download mdBook
       run: mkdir bin && curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.21/mdbook-v0.4.21-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
@@ -30,7 +30,7 @@ jobs:
       run: ./bin/mdbook build
     - name: Deploy to GitHub pages
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: book

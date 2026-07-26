@@ -1,12 +1,9 @@
 //! board/imxrt1010evk.rs
 
-use crate::{
-    hal::{self, iomuxc::pads},
-    ral,
-};
+use crate::{hal, ral};
 use imxrt1010evk_fcb as _;
 
-pub type Led = hal::gpio::Output<pads::gpio::GPIO_11>;
+pub type Led = hal::gpio::Output;
 
 #[non_exhaustive]
 pub struct Resources {
@@ -22,7 +19,7 @@ impl Resources {
 
         let mut port = hal::gpio::Port::new(gpio1);
         let pads = hal::iomuxc::into_pads(iomuxc);
-        let led = port.output(pads.gpio.p11);
+        let led = port.output(pads.gpio.p11).unwrap();
         Some(Resources { led })
     }
 }
