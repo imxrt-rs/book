@@ -152,13 +152,13 @@ project. Unlike the <a href="./ral.html">previous example</a>, this new example 
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = &quot;0.5&quot;, features = [&quot;imxrt1010&quot;] }
+imxrt-hal = { version = &quot;0.6&quot;, features = [&quot;imxrt1010&quot;] }
 
 # As before...
-imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
+imxrt-ral = { version = &quot;0.6&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
-imxrt1010evk-fcb = &quot;0.1&quot;
-panic-halt = &quot;0.2&quot;
+imxrt1010evk-fcb = &quot;0.2&quot;
+panic-halt = &quot;1&quot;
 
 [build-dependencies]
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
@@ -181,8 +181,8 @@ fn main() {
 use imxrt_hal as hal;
 use imxrt_ral as ral;
 
-use imxrt1010evk_fcb as _;
 use imxrt_rt::entry;
+use imxrt1010evk_fcb as _;
 use panic_halt as _;
 
 #[entry]
@@ -194,8 +194,9 @@ fn main() -&gt; ! {
     let mut gpio1 = hal::gpio::Port::new(gpio1);
     let pads = hal::iomuxc::into_pads(iomuxc);
 
-    // Configures the pad named &quot;GPIO_11&quot; as a GPIO output.
-    let led = gpio1.output(pads.gpio.p11);
+    // Configures the pad named &quot;GPIO_11&quot; as a GPIO output. The pad is
+    // associated with GPIO1, so the port accepts it.
+    let led = gpio1.output(pads.gpio.p11).unwrap();
     // Turn on the LED.
     led.set();
 

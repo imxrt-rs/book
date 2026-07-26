@@ -216,11 +216,11 @@ system.</li>
 
 [dependencies]
 # The boot header package.
-imxrt1010evk-fcb = &quot;0.1&quot;
+imxrt1010evk-fcb = &quot;0.2&quot;
 # The runtime.
 imxrt-rt = &quot;0.1&quot;
 # The panic handler.
-panic-halt = &quot;0.2&quot;
+panic-halt = &quot;1&quot;
 
 [build-dependencies]
 # The same runtime as above.
@@ -350,12 +350,12 @@ available.</p>
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
+imxrt-ral = { version = &quot;0.6&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
 
 # As before...
-imxrt1010evk-fcb = &quot;0.1&quot;
-panic-halt = &quot;0.2&quot;
+imxrt1010evk-fcb = &quot;0.2&quot;
+panic-halt = &quot;1&quot;
 
 [build-dependencies]
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
@@ -377,8 +377,8 @@ fn main() {
 
 use imxrt_ral as ral;
 
-use imxrt1010evk_fcb as _;
 use imxrt_rt::entry;
+use imxrt1010evk_fcb as _;
 use panic_halt as _;
 
 const LED_OFFSET: u32 = 1 &lt;&lt; 11;
@@ -421,13 +421,13 @@ project. Unlike the <a href="ecosystem_walkthrough/./ral.html">previous example<
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = &quot;0.5&quot;, features = [&quot;imxrt1010&quot;] }
+imxrt-hal = { version = &quot;0.6&quot;, features = [&quot;imxrt1010&quot;] }
 
 # As before...
-imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
+imxrt-ral = { version = &quot;0.6&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
-imxrt1010evk-fcb = &quot;0.1&quot;
-panic-halt = &quot;0.2&quot;
+imxrt1010evk-fcb = &quot;0.2&quot;
+panic-halt = &quot;1&quot;
 
 [build-dependencies]
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
@@ -450,8 +450,8 @@ fn main() {
 use imxrt_hal as hal;
 use imxrt_ral as ral;
 
-use imxrt1010evk_fcb as _;
 use imxrt_rt::entry;
+use imxrt1010evk_fcb as _;
 use panic_halt as _;
 
 #[entry]
@@ -463,8 +463,9 @@ fn main() -&gt; ! {
     let mut gpio1 = hal::gpio::Port::new(gpio1);
     let pads = hal::iomuxc::into_pads(iomuxc);
 
-    // Configures the pad named &quot;GPIO_11&quot; as a GPIO output.
-    let led = gpio1.output(pads.gpio.p11);
+    // Configures the pad named &quot;GPIO_11&quot; as a GPIO output. The pad is
+    // associated with GPIO1, so the port accepts it.
+    let led = gpio1.output(pads.gpio.p11).unwrap();
     // Turn on the LED.
     led.set();
 
@@ -569,15 +570,15 @@ boot header ensures that the runtime can boot the board's processor.</p>
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-hal = { version = &quot;0.5&quot; }
-imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;rt&quot;] }
+imxrt-hal = { version = &quot;0.6&quot; }
+imxrt-ral = { version = &quot;0.6&quot;, features = [&quot;rt&quot;] }
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
 
-teensy4-fcb      = { version = &quot;0.4&quot;, optional = true }
-imxrt1010evk-fcb = { version = &quot;0.1&quot;, optional = true }
-imxrt1170evk-fcb = { version = &quot;0.1&quot;, optional = true }
+teensy4-fcb      = { version = &quot;0.5&quot;, optional = true }
+imxrt1010evk-fcb = { version = &quot;0.2&quot;, optional = true }
+imxrt1170evk-fcb = { version = &quot;0.2&quot;, optional = true }
 
-panic-halt = &quot;0.2&quot;
+panic-halt = &quot;1&quot;
 cfg-if = &quot;1&quot;
 
 [build-dependencies]
@@ -645,7 +646,7 @@ fn main() {
 <code>Resources</code> based on the board selection.</p>
 <p>By convention, all boards define a <code>Resources</code> struct, which can be <code>take</code>n. The
 object contains a <code>led</code> member of type <code>Led</code>. The <code>Led</code> type is an alias for an
-<code>imxrt-hal</code> GPIO output, which wraps a specific processor pin.</p>
+<code>imxrt-hal</code> GPIO output; each board binds that output to its own LED pad.</p>
 <p>Notice that there is no <code>unsafe</code> in this application code. The <code>board</code> module,
 and its submodules, make sure that board <code>Resources</code> are only taken once. Our
 dependencies are not also constructing <code>imxrt-ral</code> peripheral instances, which
@@ -705,13 +706,10 @@ drivers.</p>
 </span><span class="boring">fn main() {
 </span>//! board/imxrt1010evk.rs
 
-use crate::{
-    hal::{self, iomuxc::pads},
-    ral,
-};
+use crate::{hal, ral};
 use imxrt1010evk_fcb as _;
 
-pub type Led = hal::gpio::Output&lt;pads::gpio::GPIO_11&gt;;
+pub type Led = hal::gpio::Output;
 
 #[non_exhaustive]
 pub struct Resources {
@@ -727,7 +725,7 @@ impl Resources {
 
         let mut port = hal::gpio::Port::new(gpio1);
         let pads = hal::iomuxc::into_pads(iomuxc);
-        let led = port.output(pads.gpio.p11);
+        let led = port.output(pads.gpio.p11).unwrap();
         Some(Resources { led })
     }
 }
@@ -735,11 +733,10 @@ impl Resources {
 </span></code></pre></pre>
 <p>The <code>board</code> implementation also uses the boot header crate, meeting the
 requirements discussed in <a href="ecosystem_walkthrough/./booting.html">booting</a>. Although it's not depicted in
-this example, the <code>Led</code> type and <code>Resources::take()</code> implementation vary for
-each board. And although it's not required for this small BSP, a
-<code>non_exhaustive</code> attribute on <code>Resources</code> requires that users match only the
-board resources they expect, permitting boards to add new resources without
-breaking users.</p>
+this example, the <code>Resources::take()</code> implementation varies for each board. And
+although it's not required for this small BSP, a <code>non_exhaustive</code> attribute on
+<code>Resources</code> requires that users match only the board resources they expect,
+permitting boards to add new resources without breaking users.</p>
 <p>A BSP following this design can manage lower-level peripheral instances for the
 user, and present higher-level drivers to the user. Furthermore, it presents an
 interface that may let users port their applications across different boards.

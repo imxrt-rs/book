@@ -165,12 +165,12 @@ available.</p>
 <pre><code class="language-toml"># Cargo.toml
 
 [dependencies]
-imxrt-ral = { version = &quot;0.5&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
+imxrt-ral = { version = &quot;0.6&quot;, features = [&quot;imxrt1011&quot;, &quot;rt&quot;] }
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
 
 # As before...
-imxrt1010evk-fcb = &quot;0.1&quot;
-panic-halt = &quot;0.2&quot;
+imxrt1010evk-fcb = &quot;0.2&quot;
+panic-halt = &quot;1&quot;
 
 [build-dependencies]
 imxrt-rt = { version = &quot;0.1&quot;, features = [&quot;device&quot;] }
@@ -192,8 +192,8 @@ fn main() {
 
 use imxrt_ral as ral;
 
-use imxrt1010evk_fcb as _;
 use imxrt_rt::entry;
+use imxrt1010evk_fcb as _;
 use panic_halt as _;
 
 const LED_OFFSET: u32 = 1 &lt;&lt; 11;
